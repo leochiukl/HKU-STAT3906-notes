@@ -1,0 +1,209 @@
+\section{Mixing and Conditional Expectation}
+\label{sect:mixing-and-ce}
+\subsection{Mixing}
+\begin{enumerate}
+\item Consider \(n\) random variables \(X_1,\dotsc,X_n\) which are all continuous
+(all discrete). We can create a new distribution (random variable \(X\)) by
+\emph{mixing} them, whose pdf (pmf) is
+\[
+f_X(x)=p_1f_{X_1}(x)+\dotsb+p_nf_{X_n}(x)
+\]
+where \(f_{X_i}\) is the pdf (pmf) of \(X_i\) (\(i=1,\dotsc,n\)),
+\(p_1,\dotsc,p_n\ge 0\), and \(p_1+\dotsb+p_n=1\). We can interpret the
+distribution resulting from mixing by:
+\[
+X=\begin{cases}
+X_1&\text{with probability \(p_1\)};\\
+\vdots&\vdots\\
+X_n&\text{with probability \(p_n\)}.\\
+\end{cases}
+\]
+\item \label{it:mixing-finite}
+By introducing another discrete random variable \(\Lambda\) with support
+\(\{\lambda_1,\dotsc,\lambda_n\}\) such that
+\[
+X_i\eqd (X|\Lambda=\lambda_i)\quad\text{for any \(i=1,\dotsc,n\)},
+\]
+we can associate \(f_{X_i}(x)\) with \(f_{X|\Lambda}(x|\lambda_i)\) and \(p_i\)
+with \(\prob{\Lambda=\lambda_i}\):
+\[
+f_X(x)=\sum_{i=1}^{n}f_{X|\Lambda}(x|\lambda_i)\prob{\Lambda=\lambda_i}
+=\boxed{\sum_{i=1}^{n}f_{X|\Lambda}(x|\lambda_i)p_i}.
+\]
+\begin{note}
+\(f_{X|\Lambda}(x|\lambda_i)\) is the conditional probability function of \(X\)
+given \(\Lambda=\lambda_i\).
+\end{note}
+
+(The equality holds since each summand is the joint probability function
+\(f_{X,\Lambda}(x,\lambda_i)\)i, so summing them up gives the marginal
+probability function \(f_{X_i}(x)\).)
+
+This induces mixing of finitely many (all continuous/all discrete) random
+variables using (continuous or discrete) \(X\) and discrete \(\Lambda\).
+
+\begin{note}
+Here the notion of conditional distribution includes also the case
+where one of the two random variables involved is discrete while another is
+continuous. (This may not be defined in elementary probability theory, but this
+can be allowed through more advanced probability theory. So one may take it as
+given.)
+\end{note}
+
+\item \label{it:mixing-count-infinite}
+To induce mixing of countably infinitely many random variables, we can
+introduce a discrete random variable \(\Lambda\) with support
+\(\{\lambda_1,\lambda_2,\dotsc\}\). Then, the pdf/pmf of \(X\) can similarly be
+written as
+\[
+f_X(x)=\boxed{\sum_{i=1}^{\infty}f_{X|\Lambda}(x|\lambda_i)p_i}
+\]
+where \(p_i=\prob{\Lambda=\lambda_i}\) for any \(i\in\N\).
+
+\item \label{it:mixing-uncount-infinite}
+To induce mixing of uncountably infinitely many random variables, we can
+introduce a continuous random variable \(\Lambda\). Then, the pdf/pmf of \(X\)
+can be written as
+\[
+f_X(x)=\boxed{\int_{-\infty}^{\infty}f_{X|\Lambda}(x|\lambda)f_{\Lambda}(\lambda)\dd{\lambda}}.
+\]
+(Again here the integrand is the joint probability function
+\(f_{X,\Lambda}(x,\lambda)\) so integrating it gives the marginal probability
+function \(f_X(x)\).)
+
+\item We can also express the mixing using cdf as suggested by the following
+result.
+\begin{proposition}
+\label{prp:mixing-cdf}
+Let \(X\) and \(\Lambda\) be random variables. Then,
+\begin{itemize}
+\item (\(\Lambda\) is continuous)
+\[
+F_X(x)=\int_{-\infty}^{\infty}F_{X|\Lambda}(x|\lambda)f_{\Lambda}(\lambda)\dd{\lambda}.
+\]
+\item (\(\Lambda\) is discrete)
+\[
+F_X(x)=\sum_{i}^{}F_{X|\Lambda}(x|\lambda_i)p_i
+\]
+where \(p_i=\prob{\Lambda=\lambda_i}\) and the sum is taken over all \(i\)
+where \(p_i>0\).
+\end{itemize}
+\begin{note}
+\(F_X\) is the cdf of \(X\) and \(F_{X|\Lambda}(x|\lambda)\) is the conditional
+cdf of \(X\) given \(\Lambda=\lambda\).
+\end{note}
+\end{proposition}
+\begin{pf}
+We prove only the continuous case. The discrete case can be proven similarly.
+Note that
+\begin{align*}
+F_X(x)&=\int_{-\infty}^{x}f_X(t)\dd{t}\\
+&=\int_{-\infty}^{x}\int_{-\infty}^{\infty}
+f_{X|\Lambda}(t|\lambda)f_{\Lambda}(\lambda)\dd{\lambda}\dd{t}\\
+&=\int_{-\infty}^{\infty}\int_{-\infty}^{x}
+f_{X|\Lambda}(t|\lambda)f_{\Lambda}(\lambda)\dd{t}\dd{\lambda}\\
+&=\int_{-\infty}^{\infty}f_{\Lambda}(\lambda){\color{violet}\int_{-\infty}^{x}
+f_{X|\Lambda}(t|\lambda)\dd{t}}\dd{\lambda}\\
+&=\int_{-\infty}^{\infty}f_{\Lambda}(\lambda){\color{violet}F_{X|\Lambda}(x|\lambda)}\dd{\lambda}.
+\end{align*}
+
+\end{pf}
+\end{enumerate}
+\subsection{Conditional Expectation}
+\begin{enumerate}
+\item This sections serves as a review on the concept of conditional
+expectation, which is covered in STAT2901.
+\item Consider again the random variables \(X\) and \(\Lambda\). Recall that
+the conditional expectation of \(g(X)\) given \(\Lambda=\lambda\) is
+\[
+\expv{g(X)|\Lambda=\lambda}=
+\begin{cases}
+\displaystyle
+\int_{-\infty}^{\infty}g(x)f_{X|\Lambda}(x|\lambda)\dd{x}&\text{if \(X\) and \(\Lambda\) are both continuous};\\
+\displaystyle
+\sum_{i}^{}g(x_i)f_{X|\Lambda}(x_i|\lambda)&\text{if \(X\) and \(\Lambda\) are both discrete}\\
+\end{cases}
+\]
+where the sum is taken over all \(i\) where \(f_{X|\Lambda}(x_i|\lambda)>0\).
+
+Write \(h(\lambda)=\expv{g(X)|\Lambda=\lambda}\).  Then, the conditional
+expectation of \(g(X)\) given \(\Lambda\) is denoted by \(\expv{g(X)|\Lambda}\)
+and is a \emph{random variable} (as a function of \(\Lambda\)):
+\[
+h(\Lambda)=\expv{g(X)|\Lambda}
+\]
+which takes the value \(h(\lambda)\) when \(\Lambda=\lambda\).
+
+\begin{note}
+Practically, to obtain an expression of \(\expv{g(X)|\Lambda}\), we can first
+find an expression for \(\expv{g(X)|\Lambda=\lambda}\) and replace every
+\(\lambda\) by \(\Lambda\).
+\end{note}
+\item Next, recall that the conditional variance of \(g(X)\) given
+\(\Lambda=\lambda\) is
+\[
+\vari{g(X)|\Lambda=\lambda}
+=\expv{(g(X)-\expv{g(X)|\Lambda=\lambda})^{2}|\Lambda=\lambda}
+=\expv{g(X)^2|\Lambda=\lambda}-(\expv{g(X)|\Lambda=\lambda})^2.
+\]
+\begin{note}
+Similarly, we can write \(h(\lambda)=\vari{g(X)|\Lambda=\lambda}\), and
+\(\vari{g(X)|\Lambda}\) is the random variable \(h(\Lambda)\). Thus,
+\[
+\vari{g(X)|\Lambda}=\expv{(g(X))^{2}|\Lambda}-(\expv{g(X)|\Lambda})^{2}.
+\]
+\end{note}
+\item Two remarkable results related to conditional expectation and conditional
+variance are \emph{law of total expectation} and \emph{law of total variance}.
+
+\item Law of total expectation relates unconditional and conditional
+expectations.
+\begin{theorem}[Law of total expectation]
+\label{thm:lote}
+For any function \(g\) and any random variables \(X\) and \(\Lambda\) (where
+\(\expv{g(X)}\) is finite),
+\[
+\expv{\expv{g(X)|\Lambda}}=\expv{g(X)}.
+\]
+\end{theorem}
+\begin{pf}
+We only prove for the case where \(X\) and \(\Lambda\) are both continuous.
+(The case where both are discrete can be proved similarly.\footnote{A general proof
+where both random variables can be arbitrary (as long as \(\expv{g(X)}\) is
+finite) is out of scope.}) Let \(h(\lambda)=\expv{g(X)|\Lambda=\lambda}\).
+Consider:
+\begin{align*}
+\expv{g(X)}&=\int_{-\infty}^{\infty}g(x){\color{violet}f_{X}(x)}\dd{x}\\
+&=\int_{-\infty}^{\infty}g(x){\color{violet}\int_{-\infty}^{\infty}
+f_{X|\Lambda}(x|\lambda)f_{\Lambda}(\lambda)\dd{\lambda}}\dd{x}\\
+&=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+g(x)f_{X|\Lambda}(x|\lambda)f_{\Lambda}(\lambda)\dd{\lambda}\dd{x}\\
+&=\int_{-\infty}^{\infty}f_{\Lambda}(\lambda){\color{orange}\int_{-\infty}^{\infty}
+g(x)f_{X|\Lambda}(x|\lambda)\dd{x}}\dd{\lambda}\\
+&=\int_{-\infty}^{\infty}{\color{orange}h(\lambda)}f_{\Lambda}(\lambda)\dd{\lambda}\\
+&=\expv{h(\Lambda)}\\
+&=\expv{\expv{g(X)|\Lambda}}.
+\end{align*}
+\end{pf}
+\item Law of total variance relates unconditional variance and conditional mean
+\& variance:
+\begin{proposition}[Law of total variance]
+\label{thm:lotv}
+For any random variables \(X\) (with finite variance) and \(\Lambda\),
+\[
+\vari{X}=\expv{\vari{X|\Lambda}}+\vari{\expv{X|\Lambda}}.
+\]
+\end{proposition}
+\begin{pf}
+Note that
+\begin{align*}
+\vari{X}&=\expv{X^2}-(\expv{X})^{2}\\
+&=\E[{\color{brown}\expv{X^2|\Lambda}}]-\qty(\expv{\expv{X|\Lambda}})^{2}\\
+&=\E[{\color{brown}\vari{X|\Lambda}+(\expv{X|\Lambda})^{2}}]-\qty(\expv{\expv{X|\Lambda}})^{2}\\
+&=\expv{\vari{X|\Lambda}}+\expv{({\color{violet}\expv{X|\Lambda}})^{2}}
+-\qty(\E[{\color{violet}\expv{X|\Lambda}}])^{2}\\
+&=\expv{\vari{X|\Lambda}}+\operatorname{Var}({\color{violet}\expv{X|\Lambda}}).
+\end{align*}
+\end{pf}
+\end{enumerate}
+
