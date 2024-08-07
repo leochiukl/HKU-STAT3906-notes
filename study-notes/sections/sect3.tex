@@ -571,35 +571,51 @@ First denote the success probability by \(p=1/(1+\beta)\). Then,
 \end{enumerate}
 \subsection{The Binomial Distribution}
 \begin{enumerate}
-\item A random variable \(N\) follows the \defn{binomial distribution} with
-parameters \(n\) and \(p\) (denoted by \(N\sim\bin{n,p}\)) if its pmf is given by
+\item Consider \(m\) independent Bernoulli trials with the same success
+probability \(q\). Then, in the \(m\) trials, the number of successes \(N\)
+(random variable) follows the \defn{binomial distribution} with parameters
+\(m\) and \(q\) (denoted by \(N\sim\bin{m,q}\)).
+
+The pmf of \(N\sim\bin{m,q}\) is given by
 \[
-p_k=\prob{N=k}=\binom{n}{k}p^k(1-p)^{n-k}
+p_k=\prob{N=k}=\binom{m}{k}q^k(1-q)^{n-k}
 \]
 for any \(k=0,1,\dotsc,n\).
+
+\begin{remark}
+\item \(N\sim\bin{m,q}\) can be more practically interpreted as the number of claims
+made when there are \(m\) moments (in a certain year) at which a claim (of
+suffering loss) is possible, independently with the same claim probability
+\(q\).
+
+\item This also explains the choice of notation \(q\) here. For life insurance, a
+claim is made when the insured dies (where the letter \(q\) is used in the
+notation of death/claim probability). So, to ``match'' with this case, we use
+\(q\) to denote the ``success''/claim probability here.
+\end{remark}
 \item \label{it:bin-pgf}
-Since \(N\sim\bin{n,p}\) has the same distribution as a sum of \(n\)
-independent Bernoulli (\(\bin{1,p}\)) random variables, and the pgf of a
-\(\bin{1,p}\) random variable is \(t^0(1-p)+t^1p=1+p(t-1)\), it follows that
-the pgf of \(N\sim\bin{n,p}\) is
+Since \(N\sim\bin{m,q}\) has the same distribution as a sum of \(n\)
+independent Bernoulli random variables with \(\bin{1,q}\) distribution, and the
+pgf of a random variable with \(\bin{1,q}\) distribution is
+\(t^0(1-q)+t^1q=1+q(t-1)\), it follows that the pgf of \(N\sim\bin{m,q}\) is
 \[
-P_N(t)=\boxed{[1+p(t-1)]^n}
+P_N(t)=\boxed{[1+q(t-1)]^m}
 \]
 by \cref{prp:pgf-sum}.
 
 \item \label{it:bin-mean-var}
 Based on the pgf, we know
 \begin{itemize}
-\item \(P_N'(t)=np[1+p(t-1)]^{n-1}\).
-\item \(P_N''(t)=n(n-1)p^2[1+p(t-1)]^{n-2}\).
+\item \(P_N'(t)=mq[1+q(t-1)]^{m-1}\).
+\item \(P_N''(t)=m(m-1)q^2[1+q(t-1)]^{m-2}\).
 \end{itemize}
 
-Thus, we can obtain the mean and variance of \(N\sim\bin{n,p}\) as follows.
+Thus, we can obtain the mean and variance of \(N\sim\bin{m,q}\) as follows.
 \begin{itemize}
-\item \(\expv{N}=P_N'(1)=\boxed{np}\).
-\item \(\expv{N(N-1)}=P_N''(1)=n(n-1)p^2\implies
+\item \(\expv{N}=P_N'(1)=\boxed{mq}\).
+\item \(\expv{N(N-1)}=P_N''(1)=m(m-1)q^2\implies
 \vari{N}=\expv{N^2}-(\expv{N})^2
-=n(n-1)p^2+np-(np)^2
-=\boxed{np(1-p)}\).
+=m(m-1)q^2+nq-(mq)^2
+=\boxed{mq(1-q)}\).
 \end{itemize}
 \end{enumerate}
