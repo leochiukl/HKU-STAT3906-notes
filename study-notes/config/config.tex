@@ -17,10 +17,11 @@
 \usepackage{imakeidx}
 \usepackage[style=apa]{biblatex}
 \usepackage{xfp}
+\usepackage{centernot}
+\usepackage{cancel}
 \usepackage{tikz}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{todonotes}
-\usepackage{centernot}
 \usepackage{cleveref}
 
 \usetikzlibrary{arrows.meta}
@@ -41,8 +42,8 @@
 \newcommand*{\apxsim}{\overset{\text{approx.}}\sim}
 \newcommand*{\ystar}{\textcolor{yellow}{\faIcon{star}}}
 \newcommand*{\indicset}[1]{\mathbf{1}_{\left\{#1\right\}}}
-\newcommand*{\vari}[1]{\operatorname{Var}\qty(#1)}
-\newcommand*{\cov}[1]{\operatorname{Cov}\qty(#1)}
+\newcommand*{\vari}[1]{\operatorname{Var}\left(#1\right)}
+\newcommand*{\cov}[1]{\operatorname{Cov}\left(#1\right)}
 \newcommand*{\iid}{\overset{\text{iid}}{\sim}}
 \newcommand*{\vect}[1]{\vb*{#1}}
 \newcommand*{\convp}{\overset{p}{\to}}
@@ -58,10 +59,16 @@
 \newcommand*{\E}{\mathbb{E}}
 \newcommand*{\F}{\mathbb{F}}
 \newcommand*{\warn}{\textcolor{red}{\faIcon{exclamation-triangle}}}
-\newcommand*{\prob}[1]{\mathbb{P}\qty(#1)}
-\newcommand*{\expv}[1]{\mathbb{E}\qty[#1]}
-\newcommand*{\probtheta}[1]{\mathbb{P}_{\theta}\qty(#1)}
-\newcommand*{\expvtheta}[1]{\mathbb{E}_{\theta}\qty[#1]}
+\newcommand*{\prob}[1]{\mathbb{P}\left(#1\right)}
+\newcommand*{\expv}[1]{\mathbb{E}\left[#1\right]}
+\newcommand*{\probtheta}[1]{\mathbb{P}_{\theta}\left(#1\right)}
+\newcommand*{\expvtheta}[1]{\mathbb{E}_{\theta}\left[#1\right]}
+\newcommand*{\pois}[1]{\operatorname{Poi}\left(#1\right)}
+\newcommand*{\gam}[1]{\operatorname{Gamma}\left(#1\right)}
+\newcommand*{\nb}[1]{\operatorname{NB}\left(#1\right)}
+\newcommand*{\geo}[1]{\operatorname{Geom}\left(#1\right)}
+\newcommand*{\expo}[1]{\operatorname{Exp}\left(#1\right)}
+\newcommand*{\bin}[1]{\operatorname{Bin}\left(#1\right)}
 
 \newenvironment{remark}{\sffamily \underline{Remarks}:\begin{itemize}}{\end{itemize}}
 \newenvironment{note}{\sffamily\lbrack Note:}{\!\!\rbrack}

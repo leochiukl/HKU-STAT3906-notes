@@ -83,7 +83,7 @@ value.
 \item The following result provides an useful formula for computing mean.
 \begin{proposition}
 \label{prp:mean-surv}
-Let \(X\ge 0\) be a random variable with finite mean (i.e.,
+Let \(X\) be a nonnegative random variable with finite mean (i.e.,
 \(\expv{X}<\infty\)), and let \(S_X(x)=\prob{X>x}\) be its survival function. Then,
 \[
 \expv{X}=\int_{0}^{\infty}S_X(t)\dd{t}.
@@ -114,8 +114,7 @@ This result holds no matter \(X\) is discrete or continuous.
 random variable.
 \begin{corollary}
 \label{cor:disc-mean-surv}
-Let \(X\) be a discrete random variable with support
-\(\N_0\)\footnote{\(\N_0=\{0,1,2,\dotsc\}\)}. Then,
+Let \(X\) be a nonnegative discrete random variable. Then,
 \[
 \expv{X}=\sum_{n=0}^{\infty}\prob{X>n}.
 \]
@@ -429,7 +428,7 @@ to check the \emph{speed} of \(f_X(x)\to 0\) as \(x\) rises.
 
 When the \(k\)th moment \(\expv{X^k}\) exists/is finite (i.e.,
 \(\expv{X^k}<\infty\)), it suggests that \(f_X(x)\to 0\) \emph{much faster} than the
-speed at which \(x^k\to\infty\) \faIcon{arrow-right} lighter right tail.
+speed at which \(x^k\to\infty\) \faIcon{arrow-right} thinner right tail.
 
 On the other hand, if it is infinite (i.e., \(\expv{X^k}=\infty\)), then it
 indicates that \(f_X(x)\to 0\) \emph{much slower} than the speed at which
@@ -487,7 +486,7 @@ node[midway, below=0.4cm]{\(\expv{X^k}=\infty\)};
 \end{center}
 \item Thus, we have the following indicators for tail thickness:
 \begin{itemize}
-\item Existence of \(k\)th moment for any \(k>0\) \faIcon{arrow-right} ``rather light'' right tail.
+\item Existence of \(k\)th moment for any \(k>0\) \faIcon{arrow-right} ``rather thin'' right tail.
 \item Between two nonnegative losses \(X\) and \(Y\), if the ``turning point''
 of \(X\) is smaller than that of \(Y\), then \(X\) has a \emph{thicker} right
 tail than \(Y\). \begin{note}
@@ -564,7 +563,7 @@ and hence \emph{more} likely for \(X>x+\dd{x}\) (higher probability for
 \item If \(h_X(x)\) is an increasing (or non-decreasing) function, then for
 larger \(x\), given \(X>x\), it is \emph{more} likely for \(X\in(x,x+\dd{x}]\)
 and hence \emph{less} likely for \(X>x+\dd{x}\) (lower probability for
-\emph{even larger} \(x\)) \faIcon{arrow-right} \(X\) has a light right tail.
+\emph{even larger} \(x\)) \faIcon{arrow-right} \(X\) has a thin right tail.
 \end{itemize}
 \begin{note}
 Here ``less'' and ``more'' likely are in a non-strict sense: They also include
@@ -574,26 +573,26 @@ the case ``as likely''.
 \(h_X(x)\) is decreasing in \(x\), and has \defn{increasing failure rate} (IFR)
 if \(h_X(x)\) is increasing in \(x\).
 
-Hence, \(X\) has thick (light) right tail if \(X\) has DFR (IFR).
+Hence, \(X\) has thick (thin) right tail if \(X\) has DFR (IFR).
 
 \item Lastly, we consider the comparison based on mean residual lifetime (MRL).
 \begin{itemize}
 \item If \(e_X(d)\) is decreasing in \(d\), then it suggests that there is not
 much excess loss (on average) once \(d\) is large \faIcon{arrow-right} not much
-probability is assigned to large \(x\) \faIcon{arrow-right} \(X\) has a light
+probability is assigned to large \(x\) \faIcon{arrow-right} \(X\) has a thin
 right tail.
 
 \item If \(e_X(d)\) is increasing in \(d\), then it suggests that there is
 still more excess loss (on average) when \(d\) gets larger \faIcon{arrow-right}
 quite a lot of probability is assigned to large \(x\) \faIcon{arrow-right}
-\(X\) has a heavy right tail.
+\(X\) has a thick right tail.
 \end{itemize}
 
 \item A random variable \(X\) has \defn{decreasing mean residual lifetime} (DMRL) if
 \(e_X(d)\) is decreasing in \(d\), and has \defn{increasing mean residual
 lifetime} (IMRL) if \(e_X(d)\) is increasing in \(d\).
 
-Hence, \(X\) has thick (light) right tail if \(X\) has IMRL (DMRL).
+Hence, \(X\) has thick (thin) right tail if \(X\) has IMRL (DMRL).
 
 \item Naturally, one would then be interested in the relationship between
 DFR/IFR and DMRL/IMRL. This is given as follows.

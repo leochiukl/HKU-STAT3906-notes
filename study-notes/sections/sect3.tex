@@ -1,0 +1,605 @@
+\section{Basic Frequency Models}
+\label{sect:freq-model}
+\subsection{Preliminaries}
+\begin{enumerate}
+\item Suppose that an insurer \faIcon{building} sells a type of general
+insurance to policyholders which provides some payment \faIcon{dollar-sign} on
+each \emph{claim} \faIcon{file-invoice-dollar} (of suffering some loss
+protected by the insurance) filed by policyholders.
+
+\begin{note}
+A single policyholder \faIcon{user} may file \emph{multiple} claims
+\faIcon{arrow-right} multiple payments \faIcon{dollar-sign}  are possible and
+the \emph{number} of claims is random.
+\end{note}
+
+\item Let \(N\) be the random variable representing the number of \emph{claims}
+\faIcon{file-invoice-dollar} filed by a certain policyholder \faIcon{user} in a
+certain year (\emph{claim frequency}). Then, \(N\) is a nonnegative discrete
+random variable. (It is possible for \faIcon{user} to file no claim in a
+certain year.)
+
+\item Let \(p_k=\prob{N=k}\) (\(k\in\N_0\)\footnote{\(\N_0=\{0,1,\dotsc\}\)})
+be the pmf of \(N\). Then, the \defn{probability generating function} (pgf) of
+nonnegative discrete \(N\) is
+\[
+P_N(t)=\expv{t^N}=\sum_{k=0}^{\infty}t^kp_k.
+\]
+\begin{remark}
+\item Note that \(P_N(1)=\expv{1}=1\) always.
+\item In this context, we set \(0^0=1\). So, \(P_N(0)=p_0\).
+\item Pgf is only defined for nonnegative discrete random variable.
+\end{remark}
+\item The following result suggests the ``probability generating'' property of
+pgf:
+\begin{theorem}
+\label{thm:pgf-gen-prob}
+Let \(P_N\) be the pgf of a nonnegative discrete random variable \(N\). Then,
+the pmf of \(N\) is given by
+\[
+p_m=\frac{P_N^{(m)}(0)}{m!}
+\]
+for any \(m\in\N_0\) (where \(P_N^{(m)}\) denote the \(m\)th derivative of
+\(P_N\) with \(P_N^{(0)}=P_N\)).
+\end{theorem}
+\begin{pf}
+Fix any \(m\in\N_0\). Firstly, if \(m=0\), we have \(\displaystyle
+p_0=P_N(0)=\frac{P_N(0)}{0!}\). So, henceforth consider the case where
+\(m\in\N\). Now, note that for any \(k\in\N_0\),
+\[
+\dv[m]{}{t}t^kp_k
+=\begin{cases}
+k(k-1)\dotsb(k-m+1)t^{k-m}&\text{if \(k\ge m\)}\\
+0&\text{if \(k<m\)}.
+\end{cases}
+\]
+Thus,
+\[
+P_N^{(m)}(t)=\dv[m]{}{t}\sum_{k=0}^{\infty}t^kp_k
+=\sum_{k=0}^{\infty}\dv[m]{}{t}t^kp_k
+=\sum_{k=m}^{\infty}[k(k-1)\dotsb(k-m+1)t^{k-m}p_k].
+\]
+Hence,
+\[
+P_N^{(m)}(0)=m(m-1)\dotsb(m-m+1)(1)p_m
+=m!p_m\implies p_m=\frac{P_N^{(m)}(0)}{m!}.
+\]
+\begin{note}
+Recall that \(0^0=1\).
+\end{note}
+\end{pf}
+
+\item As a corollary of \cref{thm:pgf-gen-prob}, pgf gives a sufficient
+condition for equality in distribution:
+\begin{corollary}
+\label{cor:pgf-equal-dist}
+Let \(M\) and \(N\) be two nonnegative discrete random variables with pgf
+\(P_M\) and \(P_N\). If they have the same pgf, then they have the same
+distribution.
+\end{corollary}
+\begin{pf}
+By assumption, we have \(P_M^{(m)}(0)=P_N^{(m)}(0)\) for any \(m\in\N_0\).
+Thus, by \cref{thm:pgf-gen-prob}, for any \(m\in\N_0\),
+\[
+\prob{M=m}=\prob{N=m},
+\]
+which means that \(M\) and \(N\) have the same distribution.
+\end{pf}
+
+\item Pgf also has a (partial) ``moment generating'' property as follows.
+\begin{proposition}
+\label{prp:pgf-gen-mom}
+Let \(P_N\) be the pgf of a nonnegative discrete random variable \(N\).  Then,
+\[
+P_N'(1)=\expv{N}\qqtext{and}P_N''(1)=\expv{N(N-1)}.
+\]
+\end{proposition}
+\begin{pf}
+Firstly, we have
+\[
+P_N'(t)=p_1+2p_2t+3p_3t^2+\dotsb,
+\]
+which implies
+\[
+P_N'(1)=p_1+2p_2+3p_3+\dotsb=\expv{N}.
+\]
+Next,
+\[
+P_N''(t)=2p_2+3(2)p_3t+4(3)p_4t^2+\dotsb,
+\]
+implying that
+\[
+P_N''(1)=1(0)p_1+2(1)p_2+3(2)p_3+4(3)p_4+\dotsb=\expv{N(N-1)}.
+\]
+\end{pf}
+\item The pgf of a sum of independent nonnegative discrete random variables can
+be obtained by the following formula.
+\begin{proposition}
+\label{prp:pgf-sum}
+Let \(N_1,\dotsc,N_m\) be independent nonnegative discrete random variables,
+and let \(S=N_1+\dotsb+N_m\). Then,
+\[
+P_S(t)=P_{N_1}(t)\dotsb P_{N_m}(t)
+\]
+for any \(t\) (at which all terms exist), where \(P_N\) denotes the pgf of
+\(N\).
+\end{proposition}
+\begin{pf}
+First note that \(t^{N_1},\dotsc,t^{N_m}\) are also independent. Thus,
+\[
+P_S(t)=\expv{t^S}=\expv{t^{N_1+\dotsb+N_m}}
+=\expv{t^{N_1}\dotsb t^{N_m}}
+=\expv{t^{N_1}}\dotsb\expv{t^{N_m}}
+=P_{N_1}(t)\dotsb P_{N_m}(t).
+\]
+\end{pf}
+\item Starting from here, we will discuss several kinds of probability
+distributions for modelling the number of claims \(N\) (\emph{frequency
+models}):
+\begin{enumerate}
+\item Poisson distribution
+\item mixed Poisson distribution
+\item negative binomial distribution
+\item geometric distribution
+\item binomial distribution
+\end{enumerate}
+\end{enumerate}
+\subsection{The Poisson Distribution}
+\begin{enumerate}
+\item A random variable \(N\) follows the \defn{Poisson distribution} with
+parameter \(\lambda>0\) (denoted by \(N\sim\pois{\lambda}\)) if its pmf is
+\[
+p_k=\prob{N=k}=\frac{e^{-\lambda}\lambda^k}{k!}
+\]
+for any \(k\in\N_0\).
+\item \label{it:pois-pgf}
+The pgf of \(N\sim\pois{\lambda}\) is
+\[
+P_N(t)=\expv{t^N}=\boxed{e^{\lambda(t-1)}}.
+\]
+\begin{pf}
+Note that
+\[
+P_N(t)=\sum_{k=0}^{\infty}t^kp_k
+=\sum_{k=0}^{\infty}t^k\frac{e^{-\lambda}\lambda^k}{k!}
+=e^{-\lambda}\sum_{k=0}^{\infty}\frac{({\color{violet}\lambda t})^k}{k!}
+=e^{-\lambda}e^{\color{violet}\lambda t}.
+\]
+(Recall that \(\displaystyle e^x=\sum_{k=0}^{\infty}\frac{x^k}{k!}\).)
+\end{pf}
+\item \label{it:pois-mean-var}
+We can then deduce its mean and variance based on pgf:
+\[
+\expv{N}=\vari{N}=\boxed{\lambda}.
+\]
+\begin{pf}
+Since \(P_N(t)=e^{\lambda(t-1)}\), we have
+\[
+P_N'(t)=\lambda e^{\lambda(t-1)}\qqtext{and}
+P_N''(t)=\lambda^2 e^{-\lambda(t-1)}.
+\]
+Therefore, by \cref{prp:pgf-gen-mom},
+\[
+\expv{N}=P_N'(1)=\lambda\qqtext{and}\expv{N(N-1)}=P_N''(1)=\lambda^2.
+\]
+Since \(\expv{N(N-1)}=\expv{N^2}-\expv{N}=\expv{N^2}-\lambda\), it follows that
+\[
+\vari{N}={\color{violet}\expv{N^2}}-{\color{orange}(\expv{N})^{2}}
+={\color{violet}\lambda^2+\lambda}-{\color{orange}\lambda^2}
+=\lambda.
+\]
+\end{pf}
+
+\item Here we introduce two remarkable results for a Poisson distribution:
+\emph{convolution} and \emph{thinning}/\emph{decomposition}.
+
+\item The convolution result concerns \emph{sum} of independent Poisson random
+variables. It turns out that such sum is \emph{also} Poisson distributed.
+\begin{theorem}
+\label{thm:pois-convolution}
+Let \(N_1,\dotsc,N_n\) be \(n\) independent Poisson random variables with
+parameters \(\lambda_1,\dotsc,\lambda_n\) respectively. Then, the sum
+\(S=N_1+\dotsb+N_n\) follows the Poisson distribution with parameter
+\(\lambda_1+\dotsb+\lambda_n\).
+\end{theorem}
+\begin{pf}
+We prove this using pgf. We denote pgf of \(N\) by \(P_N(t)\).  By
+\cref{prp:pgf-sum}, we have
+\[
+P_S(t)=P_{N_1}(t)\dotsb P_{N_m}(t).
+\]
+Now using \labelcref{it:pois-pgf}, we can further write
+\[
+P_S(t)=e^{\lambda_1(t-1)}\dotsb e^{\lambda_m(t-1)}
+=e^{(\lambda_1+\dotsb+\lambda_m)(t-1)}.
+\]
+But note that this is exactly the same as the pgf of (a random variable
+following) \(\pois{\lambda_1+\dotsb+\lambda_m}\) distribution. Hence, by
+\cref{cor:pgf-equal-dist}, we conclude that
+\(S\sim\pois{\lambda_1\dotsb+\lambda_m}\).
+\end{pf}
+\item The thinning/decomposition result concerns the ``finer pieces'' obtained
+from ``slicing''/``decomposing'' a Poisson random variable (``thinning'').  It
+turns out that by performing the ``slicing'' in a certain way, the resulting
+``finer pieces'' of random variables are also Poisson distributed.
+
+\begin{theorem}
+\label{thm:pois-thinning}
+Let \(N\sim\pois{\lambda}\) be the number of claims. Suppose that each claim is
+independently classified into exactly one of type \(1,\dotsc,m\) with
+probabilities \(p_1,\dotsc,p_m\) respectively (where \(p_1+\dotsb+p_m=1\)). Let
+\(N_1,\dotsc,N_m\) be the numbers of claims with types \(1,\dotsc,m\)
+respectively. Then, \(N_1,\dotsc,N_m\) are independent Poisson random variables
+with parameters \(\lambda p_1,\dotsc,\lambda p_m\) respectively.
+\end{theorem}
+\begin{center}
+\begin{tikzpicture}
+\node[] (n) at (0,0) {\(N\sim\pois{\lambda}\)};
+\node[draw] (t1) at (-4,-2) {type 1};
+\node[draw] (t2) at (-1,-2) {type 2};
+\node[] () at (1,-1) {\(\cdots\)};
+\node[draw] (tm) at (3,-2) {type \(m\)};
+\node[] () at (-4,-3) {\(N_1\sim\pois{\lambda p_1}\)};
+\node[] () at (-1,-3) {\(N_2\sim\pois{\lambda p_2}\)};
+\node[] () at (3,-3) {\(N_m\sim\pois{\lambda p_m}\)};
+\draw[-Latex] (n.south west) -- (t1.north)
+node[midway, left=0.2cm]{\(p_1\)};
+\draw[-Latex] (n.south) -- (t2.north)
+node[midway, left=0.2cm]{\(p_2\)};
+\draw[-Latex] (n.south east) -- (tm.north)
+node[midway, right=0.2cm]{\(p_m\)};
+\draw[very thick, decorate,decoration={mirror, calligraphic brace, amplitude=5pt, raise=10pt}] (-4,-3) -- (3,-3)
+node[midway, below=0.4cm]{independent};
+\end{tikzpicture}
+\end{center}
+\end{enumerate}
+\subsection{The Mixed Poisson Distribution}
+\begin{enumerate}
+\item For the mixed Poisson distribution, as its name suggests, it involves
+\emph{mixing} of Poisson random variables. In this case, we consider mixing of
+uncountably infinitely many Poisson random variables, so an auxiliary
+\emph{continuous} random variable is introduced.
+\item A random variable \(N\) follows a \defn{mixed Poisson distribution} if
+\[
+N|\Theta\sim\pois{g(\Theta)}
+\]
+where \(\Theta\) is a continuous random variable (with pdf \(f_{\Theta}\)).
+
+\begin{note}
+This notation means that the conditional distribution of \(N\) given
+\(\Theta=\theta\) is Poisson distribution with parameter \(g(\theta)\), i.e.,
+\[
+(N|\Theta=\theta)\sim\pois{g(\theta)}.
+\]
+\end{note}
+\item \label{it:mixed-pois-mean-var}
+Based on this definition, we know
+\[
+\expv{N|\Theta=\theta}=\vari{N|\Theta=\theta}=g(\theta)
+\qqtext{or}
+\expv{N|\Theta}=\vari{N|\Theta}=g(\Theta).
+\]
+Hence, we can obtain the following formulas for
+\(\expv{N}\) and \(\vari{N}\) where \(N\) is a mixed Poisson random variable:
+\begin{itemize}
+\item By law of total expectation, \(\displaystyle
+\expv{N}=\expv{\expv{N|\Theta}}=\boxed{\expv{g(\Theta)}}
+=\int_{-\infty}^{\infty}g(\theta)f_{\Theta}(\theta)\dd{\theta}\).
+\item By law of total variance,
+\(\displaystyle \vari{N}=
+\expv{\vari{N|\Theta}}+\vari{\expv{N|\Theta}}
+=\boxed{\expv{g(\Theta)}+\vari{g(\Theta)}}.
+\)
+\end{itemize}
+\begin{note}
+Assuming \(g(\Theta)\) is random (which is almost always the case), the
+variance \(\vari{g(\Theta)}>0\). Thus, in this case we have
+\[
+\vari{N}>\expv{N}
+\]
+(unlike the case where \(N\) is Poisson distributed).  A practical implication
+of this result is that mixed Poisson distribution can better model claim
+frequency that is ``relatively more disperse'' (variance higher than mean),
+than a Poisson distribution (which forces equality of variance and mean).
+\end{note}
+\item An important special case is when \(g(\theta)=\lambda\theta\) for some
+\emph{scale parameter} \(\lambda>0\). In this case, we have
+\[
+N|\Theta\sim\pois{\lambda\Theta}.
+\]
+We can then derive the following result.
+\begin{proposition}
+\label{prp:mixed-pois-scale-pgf}
+In this case, the pgf of \(N\) is given by
+\[
+P_N(t)=M_{\Theta}(\lambda(t-1))
+\]
+where \(M_{\Theta}(s)=\expv{e^{s\Theta}}\) denotes the moment generating function of \(\Theta\).
+\end{proposition}
+\begin{pf}
+By law of total expectation,
+\[
+P_N(t)=\expv{t^{N}}=\expv{{\color{violet}\expv{\left. t^{N}\right|\Theta}}}
+=\expv{{\color{violet}e^{\lambda\Theta(t-1)}}}
+=M_{\Theta}(\lambda(t-1)).
+\]
+\end{pf}
+\end{enumerate}
+\subsection{The Negative Binomial Distribution}
+\begin{enumerate}
+\item \label{it:nb-dist-elementary-def}
+In elementary probability course, a negative binomial random variable
+\(N\sim\nb{r,p}\) is defined as the number of failures before \(r\)th success in a sequence
+of independent Bernoulli trials\footnote{i.e., experiments with two possible outcomes:
+``success'' and ``failures''} with success probability \(p\in(0,1)\) (neither 0
+nor 1 so that there is randomness). Under this definition, the pmf of \(N\) is
+\[
+p_k=\prob{N=k}=\binom{r+k-1}{k}(1-p)^kp^r.
+\]
+\begin{center}
+\begin{tikzpicture}
+\draw[very thick, decorate,decoration={calligraphic brace, amplitude=5pt, raise=20pt}] (0,0) -- (6,0)
+node[midway, above=1cm]{\(r-1\; \boxed{S}\)  \& \(k\;\boxed{F}\) };
+\node[draw] () at (8,1) {S};
+\node[] () at (0,0) {\faIcon{flask}};
+\node[] () at (2,0) {\faIcon{flask}};
+\node[] () at (4,0) {\(\cdots\)};
+\node[] () at (6,0) {\faIcon{flask}};
+\node[] () at (8,0) {\faIcon{flask}};
+\node[] () at (0,-1) {1};
+\node[] () at (2,-1) {2};
+\node[] () at (4,-1) {\(\cdots\)};
+\node[] () at (6,-1) {\(r+k-1\)};
+\node[] () at (8,-1) {\(r+k\)};
+\end{tikzpicture}
+\end{center}
+Here the conditions on the parameters \(r\) and \(p\) are \(r\in\N\) and
+\(0<p<1\).
+
+\item Here we consider a more general definition of negative binomial
+distribution. A random variable \(N\) follows the \defn{negative binomial
+distribution} with parameters \(r>0\) and \(\beta>0\) (denoted by
+\(N\sim\nb{r,\beta}\)) if its pmf is given by
+\begin{equation}
+\label{eq:nb-def}
+p_k=\prob{N=k}=\binom{k+r-1}{k}\qty(\frac{\beta}{1+\beta})^k\qty(\frac{1}{1+\beta})^{r}
+\end{equation}
+for any \(k\in\N_0\).
+
+\begin{remark}
+\item Here, when we use the notation \(\nb{\cdot,\cdot}\), it carries the
+meaning of \(\nb{r,\beta}\) here instead of \(\nb{r,p}\) from the definition in
+\labelcref{it:nb-dist-elementary-def}.
+\item To move from the definition in \labelcref{it:nb-dist-elementary-def} to the
+definition here, we allow \(r\) to be any positive\emph{real} number and
+reparametrize \(p\in(0,1)\) by \(\displaystyle \frac{1}{1+\beta}\) where \(\beta>0\).
+\item Here the binomial coefficient \(\displaystyle \binom{x}{k}\) has the
+\emph{general} definition (which permits \(x\) to be any real number and
+\(k\) be any nonnegative integer):
+\[
+\binom{x}{k}=
+\begin{cases}
+\displaystyle \frac{x(x-1)\dotsb(x-k+1)}{k!}&\text{if \(k\ne 0\)};\\
+1&\text{if \(k=0\)}.
+\end{cases}
+\]
+\end{remark}
+\item We can express \cref{eq:nb-def} in an alternative way using \emph{gamma
+function}. The gamma function \(\Gamma\) is defined by
+\[
+\Gamma(x)=\int_{0}^{\infty}t^{x-1}e^{-t}\dd{t}
+\]
+which notably satisfies the recursive relationship
+\[
+\Gamma(x+1)=x\Gamma(x)
+\]
+for any \(x>0\). \begin{note}
+It serves as a generalization to factorial. (We have \(\displaystyle
+\Gamma(1)=\int_{0}^{\infty}e^{-t}\dd{t}=1\), so by the recursive relationship
+we have \(\Gamma(n)=(n-1)!\) for any \(n\in\N\).)
+\end{note}
+
+Then, note that
+\[
+\binom{k+r-1}{k}
+=\frac{(k+r-1)(k+r-2)\dotsb r}{k!}
+=\frac{(k+r-1)(k+r-2)\dotsb r\Gamma(r)}{\Gamma(r)k!}
+=\frac{\Gamma(k+r)}{\Gamma(r)k!}.
+\]
+\begin{note}
+The equality also holds when \(k=0\) as \(\displaystyle \frac{\Gamma(0+r)}{\Gamma(r)0!}=1\).
+\end{note}
+
+Thus, we can write \cref{eq:nb-def} as
+\[
+p_k=\frac{\Gamma(k+r)}{\Gamma(r)k!}\qty(\frac{\beta}{1+\beta})^k\qty(\frac{1}{1+\beta})^{r}.
+\]
+\item \label{it:nb-pgf}
+The pgf of \(N\sim\nb{r,\beta}\) is given by
+\[
+P_N(t)=\boxed{[1-\beta(t-1)]^{-r}}.
+\]
+\begin{pf}
+Note that
+\begin{align*}
+P_N(t)
+&=\expv{t^N}\\
+&=\sum_{k=0}^{\infty}t^k\binom{k+r-1}{k}\qty(\frac{\beta}{1+\beta})^k\qty(\frac{1}{1+\beta})^{r}\\
+&=\qty(\frac{1}{1+\beta})^{r}\sum_{k=0}^{\infty}\binom{k+r-1}{k}\qty(\frac{t\beta}{1+\beta})^k\\
+&=\qty(\frac{1}{1+\beta})^{r}\qty(1-\frac{t\beta}{1+\beta})^{-r}&\text{(negative binomial series formula)}\\
+&=\qty(\frac{1}{1+\beta})^{r}\qty(\frac{1+\beta}{1-(t-1)\beta})^{r}\\
+&=[1-\beta(t-1)]^{-r}.
+\end{align*}
+\end{pf}
+\item \label{it:nb-mean-var}
+Based on the pgf, we know
+\begin{itemize}
+\item \(P_N'(t)=r\beta[1-\beta(t-1)]^{-r-1}\).
+\item \(P_N''(t)=r(r+1)\beta^2[1-\beta(t-1)]^{-r-2}\).
+\end{itemize}
+We can thus obtain the mean and variance of \(N\sim\nb{r,\beta}\) as follows.
+\begin{itemize}
+\item \(\expv{N}=P_N'(1)=\boxed{r\beta}\).
+\item \(\expv{N(N-1)}=P_N''(1)=r(r+1)\beta^2\implies \vari{N}=\expv{N^2}-(\expv{N})^{2}
+=r(r+1)\beta^2+r\beta-(r\beta)^2
+=\boxed{r\beta(1+\beta)}\).
+\end{itemize}
+\begin{note}
+Since \(r\beta^2>0\), we have again \(\vari{N}>\expv{N}\) in this case. So,
+negative binomial distribution can also be used to model ``relatively more
+disperse'' claim frequency.
+\end{note}
+\item It turns out that a negative binomial random variable is actually a
+special case of mixed Poisson random variable, as suggested below.
+\begin{proposition}
+\label{prp:nb-mix-pois-gamma}
+Let \(N\) and \(\Lambda\) be two random variables where
+\(N|\Lambda\sim\pois{\Lambda}\) and \(\Lambda\sim\gam{\alpha,\theta}\).
+Then,
+\[
+N\sim\nb{\alpha,\theta}.
+\]
+\begin{remark}
+\item \(\gam{\alpha,\theta}\) denotes the gamma distribution with shape parameter
+\(\alpha\) and scale parameter \(\theta\). The pdf of
+\(\Lambda\sim\gam{\alpha,\theta}\) is given by
+\[
+f_{\Lambda}(\lambda)=\frac{\lambda^{\alpha-1}e^{-\lambda/\theta}}{\Gamma(\alpha)\theta^\alpha}, \quad \lambda>0.
+\]
+(The pdf is zero elsewhere).
+\item This suggests that a mixed Poisson random variable with mixing random
+variable following gamma distribution is negative binomial distributed.
+\end{remark}
+\end{proposition}
+\begin{pf}
+For any \(k\in\N_0\), by \labelcref{it:mixing-uncount-infinite},
+\begin{align*}
+\prob{N=k}
+&=\int_{0}^{\infty}f_{N|\Lambda}(k|\lambda)f_{\Lambda}(\lambda)\dd{\lambda}\\
+&=\int_{0}^{\infty}\frac{e^{-\lambda}\lambda^k}{k!}
+\cdot\frac{\lambda^{\alpha-1}e^{-\lambda/\theta}}{\Gamma(\alpha)\theta^\alpha}\dd{\lambda}\\
+&=\frac{\Gamma(k+\alpha)}{\Gamma(\alpha)k!}\qty(\frac{\theta}{1+\theta})^{k}
+\qty(\frac{1}{1+\theta})^{\alpha}
+\int_{0}^{\infty}\underbrace{\frac{\lambda^{k+\alpha-1}e^{-\lambda(1+\theta)/\theta}}{\Gamma(k+\alpha)\qty[\theta/(1+\theta)]^{k+\alpha}}}_{\text{pdf of \(\gam{k+\alpha,\theta/(1+\theta)}\)}}\dd{\lambda}\\
+&=\frac{\Gamma(k+\alpha)}{\Gamma(\alpha)k!}\qty(\frac{\theta}{1+\theta})^{k}
+\qty(\frac{1}{1+\theta})^{\alpha},
+\end{align*}
+which implies that \(N\sim\nb{\alpha,\theta}\).
+\end{pf}
+\end{enumerate}
+\subsection{The Geometric Distribution}
+\begin{enumerate}
+\item The geometric distribution is the special case of the negative binomial
+distribution when \(r=1\). More explicitly, a random variable \(N\) follows the
+\defn{geometric distribution} with parameter \(\beta>0\) (denoted by
+\(N\sim\geo{\beta}\)) if its pmf is given by
+\[
+p_k=\prob{N=k}=\qty(\frac{\beta}{1+\beta})^{k}\qty(\frac{1}{1+\beta})
+\]
+for any \(k\in\N_0\).
+
+\begin{note}
+As a special case of negative binomial distribution, the random variable
+\(N\sim\geo{\beta}\) can be interpreted as the number of failures in a sequence
+of independent Bernoulli trials before the \emph{first} success (with success
+probability being \(1/(1+\beta)\)).
+\end{note}
+
+\item \label{it:geo-pgf}
+By \labelcref{it:nb-pgf}, the pgf of \(N\sim\geo{\beta}\) is given by
+\[
+P_N(t)=\boxed{[1-\beta(t-1)]^{-1}}.
+\]
+\item By \labelcref{it:nb-mean-var}, the mean and variance of
+\(N\sim\geo{\beta}\) are given by:
+\begin{itemize}
+\item \(\expv{N}=\boxed{\beta}\).
+\item \(\vari{N}=\boxed{\beta(1+\beta)}\).
+\end{itemize}
+\item \label{it:geo-mix-pois-exp}
+By \cref{prp:nb-mix-pois-gamma}, a geometric random variable can be
+regarded as a mixed Poisson random variable with the mixing variable following
+\emph{exponential} distribution:
+\[
+N|\Lambda\sim\pois{\Lambda}\qqtext{and}\Lambda\sim\expo{\theta}
+\implies
+N\sim\geo{\theta}.
+\]
+\begin{note}
+We have \(\gam{1,\theta}\equiv\expo{\theta}\).
+\end{note}
+\item A remarkable property of geometric distribution is the \emph{memoryless
+property}.
+\begin{proposition}
+\label{prp:geo-memoryless}
+If \(N\sim\geo{\beta}\), then
+\[
+\prob{N=k+n|N\ge n}=\prob{N=k}
+\]
+for any \(k,n\in\N_0\).
+\begin{center}
+\begin{tikzpicture}
+\foreach \x in {-5,...,-1} \node[gray] () at (\x,0) {\faIcon{file-invoice-dollar}};
+\foreach \x in {0,...,3} \node[blue] () at (\x,0) {\faIcon{file-invoice-dollar}};
+\draw[<->, very thick, magenta] (-0.5,-1.5) -- (-0.5,-0.5);
+\foreach \x in {0,...,3} \node[blue] () at (\x,-2) {\faIcon{file-invoice-dollar}};
+\node[cross out, draw=red] () at (-3,-1) {{\color{pink!90!black}\faIcon{brain}}};
+\node[] () at (6,0) {\(\prob{N=k+n|N\ge n}\)};
+\node[] () at (6,-2) {\(\prob{N=k}\)};
+\draw[very thick, decorate,decoration={calligraphic brace, amplitude=5pt, raise=10pt}] (-5,0) -- (-1,0)
+node[midway, above=0.5cm]{\(n\) (``past'' claims)};
+\draw[very thick, decorate,decoration={calligraphic brace, amplitude=5pt, raise=10pt}] (0,0) -- (3,0)
+node[midway, above=0.5cm]{\(k\)};
+\draw[very thick, decorate,decoration={calligraphic brace, amplitude=5pt, raise=10pt}] (0,-2) -- (3,-2)
+node[midway, above=0.5cm]{\(k\)};
+\end{tikzpicture}
+\end{center}
+\end{proposition}
+\begin{pf}
+First denote the success probability by \(p=1/(1+\beta)\). Then,
+\(p_k=(1-p)^kp\). Thus,
+\begin{align*}
+\prob{N=k+n|N\ge n}
+&=\frac{\prob{N=k+n\cap N\ge n}}{\prob{N\ge n}} \\
+&=\frac{\prob{N=k+n}}{\prob{N\ge n}} \\
+&=\frac{(1-p)^{k+n}\cancel{p}}{\sum_{i=n}^{\infty}(1-p)^i\cancel{p}} \\
+&=\frac{(1-p)^{k+n}}{(1-p)^n/(1-(1-p))} \\
+&=(1-p)^kp\\
+&=\prob{N=k}.
+\end{align*}
+\end{pf}
+\end{enumerate}
+\subsection{The Binomial Distribution}
+\begin{enumerate}
+\item A random variable \(N\) follows the \defn{binomial distribution} with
+parameters \(n\) and \(p\) (denoted by \(N\sim\bin{n,p}\)) if its pmf is given by
+\[
+p_k=\prob{N=k}=\binom{n}{k}p^k(1-p)^{n-k}
+\]
+for any \(k=0,1,\dotsc,n\).
+\item \label{it:bin-pgf}
+Since \(N\sim\bin{n,p}\) has the same distribution as a sum of \(n\)
+independent Bernoulli (\(\bin{1,p}\)) random variables, and the pgf of a
+\(\bin{1,p}\) random variable is \(t^0(1-p)+t^1p=1+p(t-1)\), it follows that
+the pgf of \(N\sim\bin{n,p}\) is
+\[
+P_N(t)=\boxed{[1+p(t-1)]^n}
+\]
+by \cref{prp:pgf-sum}.
+
+\item \label{it:bin-mean-var}
+Based on the pgf, we know
+\begin{itemize}
+\item \(P_N'(t)=np[1+p(t-1)]^{n-1}\).
+\item \(P_N''(t)=n(n-1)p^2[1+p(t-1)]^{n-2}\).
+\end{itemize}
+
+Thus, we can obtain the mean and variance of \(N\sim\bin{n,p}\) as follows.
+\begin{itemize}
+\item \(\expv{N}=P_N'(1)=\boxed{np}\).
+\item \(\expv{N(N-1)}=P_N''(1)=n(n-1)p^2\implies
+\vari{N}=\expv{N^2}-(\expv{N})^2
+=n(n-1)p^2+np-(np)^2
+=\boxed{np(1-p)}\).
+\end{itemize}
+\end{enumerate}

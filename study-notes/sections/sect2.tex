@@ -67,8 +67,8 @@ can be written as
 \[
 f_X(x)=\boxed{\int_{-\infty}^{\infty}f_{X|\Lambda}(x|\lambda)f_{\Lambda}(\lambda)\dd{\lambda}}.
 \]
-(Again here the integrand is the joint probability function
-\(f_{X,\Lambda}(x,\lambda)\) so integrating it gives the marginal probability
+(Here the integrand is the joint probability function
+\(f_{X,\Lambda}(x,\lambda)\), so integrating it gives the marginal probability
 function \(f_X(x)\).)
 
 \item We can also express the mixing using cdf as suggested by the following
@@ -143,7 +143,7 @@ find an expression for \(\expv{g(X)|\Lambda=\lambda}\) and replace every
 \(\Lambda=\lambda\) is
 \[
 \vari{g(X)|\Lambda=\lambda}
-=\expv{(g(X)-\expv{g(X)|\Lambda=\lambda})^{2}|\Lambda=\lambda}
+=\expv{(g(X)-(\expv{g(X)|\Lambda=\lambda})^{2}|\Lambda=\lambda}
 =\expv{g(X)^2|\Lambda=\lambda}-(\expv{g(X)|\Lambda=\lambda})^2.
 \]
 \begin{note}
