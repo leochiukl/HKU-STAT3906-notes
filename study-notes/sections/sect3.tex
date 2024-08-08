@@ -197,26 +197,26 @@ Since \(\expv{N(N-1)}=\expv{N^2}-\expv{N}=\expv{N^2}-\lambda\), it follows that
 variables. It turns out that such sum is \emph{also} Poisson distributed.
 \begin{theorem}
 \label{thm:pois-convolution}
-Let \(N_1,\dotsc,N_n\) be \(n\) independent Poisson random variables with
-parameters \(\lambda_1,\dotsc,\lambda_n\) respectively. Then, the sum
-\(S=N_1+\dotsb+N_n\) follows the Poisson distribution with parameter
-\(\lambda_1+\dotsb+\lambda_n\).
+Let \(N_1,\dotsc,N_k\) be \(k\) independent Poisson random variables with
+parameters \(\lambda_1,\dotsc,\lambda_k\) respectively. Then, the sum
+\(S=N_1+\dotsb+N_k\) follows the Poisson distribution with parameter
+\(\lambda_1+\dotsb+\lambda_k\).
 \end{theorem}
 \begin{pf}
 We prove this using pgf. We denote pgf of \(N\) by \(P_N(t)\).  By
 \cref{prp:pgf-sum}, we have
 \[
-P_S(t)=P_{N_1}(t)\dotsb P_{N_m}(t).
+P_S(t)=P_{N_1}(t)\dotsb P_{N_k}(t).
 \]
 Now using \labelcref{it:pois-pgf}, we can further write
 \[
-P_S(t)=e^{\lambda_1(t-1)}\dotsb e^{\lambda_m(t-1)}
-=e^{(\lambda_1+\dotsb+\lambda_m)(t-1)}.
+P_S(t)=e^{\lambda_1(t-1)}\dotsb e^{\lambda_k(t-1)}
+=e^{(\lambda_1+\dotsb+\lambda_k)(t-1)}.
 \]
 But note that this is exactly the same as the pgf of (a random variable
-following) \(\pois{\lambda_1+\dotsb+\lambda_m}\) distribution. Hence, by
+following) \(\pois{\lambda_1+\dotsb+\lambda_k}\) distribution. Hence, by
 \cref{cor:pgf-equal-dist}, we conclude that
-\(S\sim\pois{\lambda_1\dotsb+\lambda_m}\).
+\(S\sim\pois{\lambda_1\dotsb+\lambda_k}\).
 \end{pf}
 \item The thinning/decomposition result concerns the ``finer pieces'' obtained
 from ``slicing''/``decomposing'' a Poisson random variable (``thinning'').  It
