@@ -2,10 +2,10 @@
 \label{sect:freq-model}
 \subsection{Preliminaries}
 \begin{enumerate}
-\item Suppose that an insurer \faIcon{building} sells a type of general
-insurance to policyholders which provides some payment \faIcon{dollar-sign} on
-each \emph{claim} \faIcon{file-invoice-dollar} (of suffering some loss
-protected by the insurance) filed by policyholders.
+\item Suppose that an insurer \faIcon{building} sells a type of insurance to
+policyholders which provides some payment \faIcon{dollar-sign} on each
+\emph{claim} \faIcon{file-invoice-dollar} (of suffering some loss protected by
+the insurance) filed by policyholders.
 
 \begin{note}
 A single policyholder \faIcon{user} may file \emph{multiple} claims
@@ -595,8 +595,8 @@ notation of death/claim probability). So, to ``match'' with this case, we use
 \end{remark}
 \item \label{it:bin-pgf}
 Since \(N\sim\bin{m,q}\) has the same distribution as a sum of \(n\)
-independent Bernoulli random variables with \(\bin{1,q}\) distribution, and the
-pgf of a random variable with \(\bin{1,q}\) distribution is
+independent Bernoulli random variables with \(\ber{q}\equiv\bin{1,q}\) distribution, and the
+pgf of a random variable with \(\ber{q}\) distribution is
 \(t^0(1-q)+t^1q=1+q(t-1)\), it follows that the pgf of \(N\sim\bin{m,q}\) is
 \[
 P_N(t)=\boxed{[1+q(t-1)]^m}

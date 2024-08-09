@@ -212,7 +212,7 @@ Since \((X-d)_{+}\ge 0\) (with finite mean also), by \cref{prp:mean-surv} we hav
 =\int_{0}^{\infty}\prob{X>d+t}\dd{t}
 \overset{x=t+d}{=}\int_{d}^{\infty}S_X(x)\dd{x}
 \]
-where the second equality holds as \((X-d)_{+}>t\iff X>d+t\) for any \(t>0\).
+where the second equality holds as \((X-d)_{+}>t\iff X>d+t\) for any \(t\ge 0\).
 \begin{center}
 \begin{tikzpicture}[
 declare function={sl(\x)=(\x<=2)*0+(\x>2)*(\x-2);}
@@ -235,11 +235,22 @@ xmin=-0.5, ymin=-0.5, xlabel=\(X\), ylabel=\((X-d)_{+}\)]
 \item Consider again a loss random variable \(X\) and fix any \(d\in\R\) with
 \(\prob{X>d}>0\). Then, the \defn{excess loss variable} (or \defn{residual
 lifetime}/``future lifetime random variable for a life aged \(d\)'' (in life
-contingencies)) is any random variable \(Y\) with the same distribution
-as the conditional distribution of \(X-d\) given \(X>d\), i.e.,
+contingencies)) is 
 \[
-Y\eqd (X-d|X>d).
+Y=\begin{cases}
+\text{undefined}&\text{if \(X\le d\);}\\
+X-d&\text{if \(X>d\)}
+\end{cases}
+=(X-d|X>d).
 \]
+\begin{note}
+The excess loss variable gives the amount of loss in excess of the deductible,
+\emph{given that} such excess of loss exists. If there is no such excess of
+loss, we \emph{do not define} excess loss variable.
+
+More precisely, the excess loss variable \(Y\) has the same distribution as the
+\emph{conditional} distribution of \(X-d\) given \(X>d\).
+\end{note}
 \item We are usually interested in studying the \emph{expected value} of the
 excess loss variable, which is called the \defn{mean excess loss function} (or
 \defn{mean residual lifetime} (MRL)/``complete expectation of life'' in life

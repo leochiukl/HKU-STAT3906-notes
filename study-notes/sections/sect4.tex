@@ -121,8 +121,8 @@ choice of \(p_0\) on distribution in the \((a,b,0)\) class \faIcon{arrow-right}
 resulting in the \emph{\((a,b,1)\) class}.
 
 \item Let \(N\) be a nonnegative discrete random variable with pmf
-\(p_k=\prob{N=k}\). Then, (the distribution of) \(N\) is in the \((a,b,1)\)
-class if there exist constants \(a\) and \(b\) such that
+\(p_k=\prob{N=k}\). Then, (the distribution of) \(N\) is in the \defn{\((a,b,1)\)
+class} if there exist constants \(a\) and \(b\) such that
 \[
 \frac{p_k}{p_{k-1}}=a+\frac{b}{k}\quad\text{for any \(k\ge {\color{magenta}2}\)},
 \]
@@ -183,12 +183,12 @@ p_0^M+c(1-p_0)=1
 c=\boxed{\frac{1-p_0^M}{1-p_0}}.
 \]
 \item \label{it:zm-kth-moment}
-Let \(N\) be a random variable in the \((a,b,1)\) class, and let \(M\) be
+Let \(N\) be a random variable in the \((a,b,1)\) class, and let \(N^M\) be
 the random variable in the zero-modified \((a,b,1)\) class obtained by applying
 zero-modification on the distribution of \(N\). Then, for any \(k\ge 1\), the
-\(k\)th moment of \(M\) is
+\(k\)th moment of \(N^M\) is
 \[
-\expv{M^k}=\sum_{j=1}^{\infty}j^kp_j^M 
+\expv{\qty(N^M)^{k}}=\sum_{j=1}^{\infty}j^kp_j^M 
 =\sum_{j=1}^{\infty}j^k {\color{violet}c}p_j
 ={\color{violet}c}\sum_{j=1}^{\infty}j^k p_j
 =\boxed{c\expv{N^k}}
@@ -197,9 +197,9 @@ where \(\displaystyle c=\frac{1-p_0^M}{1-p_0}=\frac{1-\prob{M=0}}{1-\prob{N=0}}\
 
 \item \label{it:zm-pgf-fmlas}
 Consider the same setting as \labelcref{it:zm-kth-moment}. Then, the pgf
-of \(M\) is
+of \(N^M\) is
  \[
-P_M(t)=p_0^M+tp_1^M+t^2p_2^M
+P_{N^M}(t)=p_0^M+tp_1^M+t^2p_2^M
 =p_0^M+c(tp_1+t^2p_2+\dotsb)
 =\boxed{p_0^M+c(P_N(t)-p_0)}
 \]
@@ -225,9 +225,9 @@ zero-modified \((a,b,1)\) class, previous formulas in
 setting \(p_0^M=0\). Particularly:
 \begin{itemize}
 \item \(\displaystyle c=\frac{1}{1-p_0}\) (where \(p_k^T=cp_k\) for any \(k\ge 1\)).
-\item The pgf of \(M\) (obtained by zero-truncating \(N\)) is
+\item The pgf of \(N^T\) (obtained by zero-truncating \(N\)) is
 \[
-P_M(t)=(1-c)+cP_N(t)=\qty(1-\frac{1}{1-p_0})+\frac{1}{1-p_0}P_N(t),
+P_{N^T}(t)=(1-c)+cP_N(t)=\qty(1-\frac{1}{1-p_0})+\frac{1}{1-p_0}P_N(t),
 \]
 which only involves \(p_0\) and \(P_N(t)\).
 \end{itemize}
