@@ -736,7 +736,8 @@ the deductible) \faIcon{arrow-right} some losses do not trigger payment from
 \faIcon{building} \faIcon{arrow-right} number of losses and number of payments
 can differ.
 
-\item Suppose that there are \(N^L\) (random variable) independent losses, and
+\item \label{it:nlnp-setting}
+Suppose that there are \(N^L\) (random variable) independent losses, and
 let \(X_j\) be the amount/severity of \(j\)th loss. For a given insurance
 policy with possibly coverage modification, let \(v\) be the probability that a
 loss results in a payment. (For example, \(v=\prob{X>d}\) for an insurance with
@@ -761,7 +762,7 @@ To obtain the pgf of \(N^P\), first note that \(I_1,I_2,\dotsc\) are i.i.d.
 Thus, they have the common pgf \(P_I(t)=t^0(1-v)+t^1v=1-v+vt\). Hence, the pgf
 of the compound random variable \(N^P\) is
 \[
-P_{N^P}(t)=P_{N^L}(P_I(t))=\boxed{P_{N^L}[(1-v)+vt]}.
+P_{N^P}(t)=P_{N^L}(P_I(t))=\boxed{P_{N^L}\big((1-v)+vt\big)}.
 \]
 
 \item \label{it:np-mean-var}

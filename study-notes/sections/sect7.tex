@@ -1,0 +1,461 @@
+\section{Aggregate Loss Model}
+\label{sect:agg-loss-model}
+\begin{enumerate}
+\item Previously, when multiple losses are involved, we consider them in
+isolation. Here, we study the behaviour of their \emph{sum} (called
+\defn{aggregate loss}).
+\item A practical setting where such sum arises is when an insurer sells many
+insurance policies \faIcon{arrow-right} pooling many risks and having
+``diversification''.
+\end{enumerate}
+\subsection{Collective Risk Model}
+\begin{enumerate}
+\item In the \defn{collective risk model}, the aggregate loss is a sum
+\(S\) of \(N\) (random variable) individual losses with amounts
+\(X_1,\dotsc,X_N\):
+\[
+S=X_1+\dotsb+X_N.
+\]
+Furthermore we impose the following:
+\begin{itemize}
+\item When \(N=0\), we have \(S=0\).
+\item \(X_1,X_2,\dotsc\) are i.i.d.\ random variables (with the same
+distribution as a random variable \(X\)) and are independent of \(N\).
+\end{itemize}
+\begin{remark}
+\item This setting is similar to \labelcref{it:cpd-dist-as-total-claims}.
+\item The random variable \(N\) is called \defn{claim count} (or \defn{claim
+frequency}).
+\item Each random variable \(X_j\) is called \defn{severity}/\defn{single
+loss}/\defn{individual loss}.
+\item The aggregate loss \(S\) is a \emph{compound random variable} with
+primary (secondary) distribution being claim frequency distribution (severity
+distribution).
+\end{remark}
+We work in the collective risk model henceforth in this section.
+\item \label{it:collective-risk-s-pgf}
+The pgf of \(S\) is
+\[
+P_S(t)=\boxed{P_N(P_X(t))}
+\]
+where \(P_N\) and \(P_X\) are the pgfs of \(N\) and \(X\) respectively.
+
+\item \label{it:collective-risk-s-mgf}
+The mgf of \(S\) is
+\[
+M_S(t)=\expv{\qty(e^t)^S}=P_S(e^t)
+=P_N(P_X(e^t))=\boxed{P_N(M_X(t))}
+\]
+where \(M_X\) is the mgf of \(X\).
+
+\item \label{it:collective-risk-s-mean-var}
+By \labelcref{it:cpd-dist-mean-var}, the mean and variance of \(S\) are:
+\begin{itemize}
+\item \(\expv{S}=\boxed{\expv{N}\expv{X}}\).
+\item \(\vari{S}=\boxed{\expv{N}\vari{X}+\vari{N}(\expv{X})^2}\).
+\end{itemize}
+
+\item Consider the collective risk model equipped with the setting in
+\labelcref{it:nlnp-setting}. Suppose that the given insurance policy has an
+ordinary/franchise deducible of \(d\) applied to individual losses. Then, the
+probability that a loss results in a payment is
+\[
+v=\prob{X>d}.
+\]
+Recall that the total number of payments is
+\[
+N^P=I_1+I_2+\dotsb+I_{N^L}
+\]
+where \(N^L\) is the total number of losses.
+
+Now, for any \(i=1,2,\dotsc\), let the per-loss and per-payment variables be
+respectively:
+\begin{itemize}
+\item \(Y^L_i=(X_i-d)_{+}\).
+\item \(Y^P_i=(X_i-d|X_i>d)\).
+\end{itemize}
+
+\item \label{it:agg-pmt-fmlas}
+In this setting, the \defn{aggregate payment} can be calculated in the
+following ways:
+\begin{itemize}
+\item per-loss perspective: \(\text{aggregate payment}=\boxed{Y_1^L+\dotsb+Y_{N^L}^L}\)
+\begin{note}
+This sums ``payments'' associated to all losses (\(N^L\) of them), including those
+with zero value.
+\end{note}
+\item per-payment perspective: \(\text{aggregate payment}=\boxed{Y_1^P+\dotsb+Y_{N^P}^P}\)
+\begin{note}
+This sums only positive payments (\(N^P\) of them).
+\end{note}
+\end{itemize}
+Both methods result in the same aggregate payment since the difference between
+two expressions is just a sum of ``payments'' of zero value.
+\end{enumerate}
+\subsection{Convolution}
+\begin{enumerate}
+\item To obtain more distributional quantities for the aggregate loss \(S\) in
+the collective risk model, we need the concept of \emph{convolution}.
+
+\item Let \(X_1,X_2,\dotsc\) be i.i.d.\ continuous random variables with the
+same cdf \(F_X\) and pdf \(f_X\). Define
+\[
+S_n=X_1+\dotsb+X_n
+\]
+which is a sum of \(n\) i.i.d.\ random variables. Denote its cdf by \(F_X^{*n}\):
+\[
+F_{X}^{*n}(x)=\prob{X_1+\dotsb+X_n\le x}\quad\text{for any \(x\in\R\)}.
+\]
+\item \label{it:cts-convolution-steps}
+To find the cdf \(F_{X}^{*n}\), we can perform the following recursive
+process:
+\begin{enumerate}
+\item Define \(F_{X}^{*1}=F_{X}\) (the common cdf of \(X_1,X_2,\dotsc\)).
+\item Use the following recursive formula to find
+\(F_X^{*2},F_X^{*3},\dotsc\), up to \(F_X^{*n}\):
+\begin{align*}
+&F_{X}^{*k}(x)=\prob{X_1+\dotsb+X_k\le x}\\
+&\quad=\int_{-\infty}^{\infty}\prob{X_1+\dotsb+X_k\le x|X_k=y}f_{X}(y)\dd{y}&\text{(law of total probability, continuous case)}\\
+&\quad=\int_{-\infty}^{\infty}\prob{X_1+\dotsb+X_{k-1}\le x-y}f_{X}(y)\dd{y}\\
+&\quad=\boxed{\int_{-\infty}^{\infty}F_{X}^{*(k-1)}(x-y)f_{X}(y)\dd{y}}
+\end{align*}
+for any \(k=2,3,\dotsc\).
+
+\begin{note}
+The operation here is a special case of \emph{convolution} (mathematical
+concept) in the context of probability distributions.
+\end{note}
+\end{enumerate}
+
+\item \label{it:nonneg-cts-convolution-cdf-pdf-fmlas}
+In case \(X_1,X_2,\dotsc\) are \emph{nonnegative} (e.g., when they represent
+individual losses in the collective risk model), the recursive formula can be
+expressed as:
+\[
+F_{X}^{*k}(x)=\boxed{\int_{0}^{x}F_{X}^{*(k-1)}(x-y)f_X(y)\dd{y}}
+\]
+for any \(k=2,3,\dotsc\) (since the integrand is zero when \(y\notin(0,x)\)).
+
+Furthermore, the recursive formula for \emph{pdf} can be obtained by
+differentiating both sides of this recursive formula:
+\[
+f_{X}^{*k}(x)=\boxed{\int_{0}^{x}f_{X}^{*(k-1)}(x-y)f_X(y)\dd{y}}
+\]
+for any \(k=2,3,\dotsc\), where \(f_X^{*n}\) denotes the pdf of
+\(X_1+\dotsb+X_n\).
+
+\item \label{it:nonneg-disc-convolution-cdf-pdf-fmlas}
+If \(X_1,X_2,\dotsc\) become \emph{discrete} (and are still nonnegative \&
+i.i.d., with the same pmf \(f_X\)), then the recursive formulas in
+\labelcref{it:nonneg-cts-convolution-cdf-pdf-fmlas} become:
+\[
+F_{X}^{*k}(x)=\boxed{\sum_{y=0}^{x}F_{X}^{*(k-1)}(x-y)f_X(y)},\quad x=0,1,\dotsc,
+\]
+for any \(k=2,3,\dotsc\), and
+\[
+f_{X}^{*k}(x)=\boxed{\sum_{y=0}^{x}f_{X}^{*(k-1)}(x-y)f_X(y)},\quad x=0,1,\dotsc,
+\]
+for any \(k=2,3,\dotsc\), where \(f_X^{*n}\) denotes the pmf of
+\(X_1+\dotsb+X_n\).
+\end{enumerate}
+\subsection{Cdf and Probability Function of the Aggregate Loss}
+\begin{enumerate}
+\item Having the recursive formulas from the concept of convolution, we can
+derive the cdf and probability function of the aggregate loss \(S\) in the
+collective risk model. Henceforth we let \(p_n=\prob{N=n}\) be the pmf of the
+claim frequency \(N\).
+
+\item \label{it:collective-risk-s-cdf}
+The cdf of the aggregate loss \(S\) is
+\begin{align*}
+F_S(x)&=\sum_{n=0}^{\infty}p_n\cdot\prob{S\le x|N=n} &\text{(law of total probability)}\\
+&=\sum_{n=0}^{\infty}p_n\cdot\prob{X_1+\dotsb+X_n\le x|N=n} \\
+&=\sum_{n=0}^{\infty}p_n\cdot\prob{X_1+\dotsb+X_n\le x} &\text{(by independence assumption)}\\
+&=\boxed{\sum_{n=0}^{\infty}p_n\cdot F_{X}^{*n}(x)}.
+\end{align*}
+
+\item \label{it:collective-risk-s-probf}
+Based on the formula in \labelcref{it:collective-risk-s-cdf}, the probability
+function of the aggregate loss \(S\) is thus given by:
+\begin{itemize}
+\item (\(S\) is continuous): differentiating \faIcon{arrow-right} pdf is
+\[f_S(x)=\boxed{\sum_{n=0}^{\infty}p_n\cdot f_X^{*n}(x)},\] where
+\(f_X^{*n}\) is the pdf of \(X_1+\dotsb+X_n\).
+\item (\(S\) is discrete): pmf is
+\[f_S(x)=F_S(x+1)-F_S(x)
+=\sum_{n=0}^{\infty}p_n\cdot [F_{X}^{*n}(x+1)-F_{X}^{*n}(x)]
+=\boxed{\sum_{n=0}^{\infty}p_n\cdot f_{X}^{*n}(x)},\]
+where \(x=0,1,\dotsc\) and \(f_X^{*n}\) is the pmf of \(X_1+\dotsb+X_n\).
+\end{itemize}
+\end{enumerate}
+\subsection{Panjer's Recursion for Discrete Severity}
+\begin{enumerate}
+\item When the severity is discrete, the aggregate loss in the collective risk
+model \(S\) ``matches'' with the setting in
+\labelcref{it:cpd-dist-as-total-claims} (just with different notations and
+``labels''), so \emph{Panjer's recursion} is applicable for finding the
+distribution of \(S\) recursively.
+
+\item \label{it:panjer-recursion-ab0-agg-loss}
+By \cref{thm:panjer-recursion-ab0}, when the claim frequency \(N\) is in
+the \((a,b,0)\) class, the pmf of \(S\) can be obtained recursively by
+\[
+{\color{violet}f_S(x)}=\boxed{\frac{1}{1-af_X(0)}\sum_{y=1}^{x}\qty(a+\frac{by}{x})f_X(y){\color{violet}f_S(x-y)}}
+\]
+for any \(x\ge 1\) (in the support of \(S\)).
+
+\begin{note}
+The starting value \(f_S(0)\) can be obtained by
+\[
+f_S(0)=P_S(0)=P_N(P_X(0))=P_N(f_X(0)).
+\]
+\end{note}
+
+\item \label{it:panjer-recursion-ab1-agg-loss}
+By \cref{thm:panjer-recursion-ab1}, when the claim frequency \(N\) is in
+the \((a,b,0)\) class, we have:
+
+\[
+{\color{violet}f_S(x)}=\boxed{\frac{1}{1-af_X(0)}\qty{
+{\color{orange}[p_1-(a+b)p_0]f_X(x)}+
+\sum_{y=1}^{x}\qty(a+\frac{by}{x})f_X(y){\color{violet}f_S(x-y)}}}
+\]
+for any \(x\ge 1\) (in the support of \(S\)).
+\end{enumerate}
+
+\subsection{Method of Rounding}
+\begin{enumerate}
+\item To apply the recursive formulas in
+\labelcref{it:panjer-recursion-ab0-agg-loss,it:panjer-recursion-ab1-agg-loss},
+the severity \(X\) needs to be \emph{discrete}. Thus, they are not applicable
+for \emph{continuous} severity. Nevertheless, we may still ``apply'' the
+formulas by \emph{approximating} the continuous severity distribution by a
+discrete distribution (known as \defn{discretization}). Here, we introduce a
+way of discretization: \emph{method of rounding}.
+
+\item The \defn{method of rounding} is as follows. Let \(X\) be the original
+continuous severity with cdf \(F_X\). Then, we approximate \(X\) by a discrete
+random variable \(X'\) defined by:
+\[
+X'=\begin{cases}
+0&\text{w.p. \(f_0=F_X(h/2)\)}; \\
+h&\text{w.p. \(f_1=F_X(h+h/2)-F_X(h-h/2)\)}; \\
+2h&\text{w.p. \(f_2=F_X(2h+h/2)-F_X(2h-h/2)\)}; \\
+\vdots&\vdots \\
+jh&\text{w.p. \(f_j=F_X(jh+h/2)-F_X(jh-h/2)\)}; \\
+\vdots&\vdots \\
+\end{cases}
+\]
+\begin{center}
+\begin{tikzpicture}
+\draw[-Latex] (0,0) -- (10,0)
+node[right]{\(X\)};
+\draw[-Latex] (0,-2) -- (10,-2)
+node[right]{\(X'\)};
+\draw[<->, brown] (0,0.3) -- (0.5,0.3) node[midway, above]{\(h/2\)};
+\foreach \x in {1,...,9} \draw[<->, brown] (\x-0.5,0.3) -- (\x+0.5,0.3) node[midway, above]{\(h\)};
+\foreach \x in {2,...,9} \draw[fill] (\x,-2) circle [radius=0.5mm] node[below]{\(\x h\)};
+\draw[fill] (0,-2) circle [radius=0.5mm] node[below]{0};
+\draw[fill] (1,-2) circle [radius=0.5mm] node[below]{\(h\)};
+\draw[thick, decorate,decoration={brace, amplitude=5pt, raise=5pt, mirror}] (0,0) -- (0.5,0);
+\foreach \x in {1,...,9}{
+\draw[thick, decorate,decoration={brace, amplitude=5pt, raise=5pt, mirror}] (\x-0.5,0) -- (\x+0.5,0);
+\draw[thick, ->, magenta] (\x,-1) -- (\x,-1.7);
+}
+\draw[thick, ->, magenta] (0.25,-1) -- (0,-1.7);
+\node[magenta] () at (11,-1) {rounding off};
+\node[violet] () at (-1,-0.7) {prob.};
+\foreach \x in {1,...,9} \node[violet] () at (\x,-0.7) {\(f_{\x}\)};
+\node[violet] () at (0.25,-0.7) {\(f_0\)};
+\end{tikzpicture}
+\end{center}
+\begin{remark}
+\item ``w.p.''\ means ``with probability''.
+\item We call \(h\) the \defn{span}.
+\end{remark}
+\end{enumerate}
+\subsection{Stop-Loss Premium}
+\begin{enumerate}
+\item Practically, it is common for an insurance to not apply deductible
+\emph{individually} on each loss claimed, but apply it on the losses claimed
+for a certain period (say a year) \emph{in aggregate}.
+
+\item Consider an aggregate loss \(S\) (sum of individual losses in a certain
+period). An insurance on the aggregate loss \(S\) subject to a deductible \(d\)
+is called \defn{stop-loss insurance}. The expected payment per loss of this
+insurance is called the \defn{(net) stop-loss premium}:
+\[
+\expv{(S-d)_{+}}.
+\]
+\begin{remark}
+\item Here we are not required to work in the collective risk model.
+\item The insurance ``stops'' the aggregate loss suffered by the policyholder
+\faIcon{user} (once \(d\) dollar is reached) \faIcon{arrow-right} hence
+``stop-loss insurance''.
+\item If one uses the \emph{equivalence principle} (without considering
+expenses) to price the insurance policy, the net premium obtained would be
+\(\expv{(S-d)_{+}}\) (the expected amount of benefit) \faIcon{arrow-right}
+hence ``net stop-loss premium''.
+\end{remark}
+
+\item Here we recall some formulas for computing the stop-loss premium
+discussed in \cref{sect:dist-quantities}:
+\begin{itemize}
+\item (\cref{prp:mean-sl-surv})
+\[
+\expv{(S-d)_{+}}=\boxed{\int_{d}^{\infty}[1-F_S(x)]\dd{x}}
+\]
+where \(F_S\) is the cdf of \(S\).
+
+\item (\labelcref{it:stop-loss-direct-exp-fmlas}) If \(S\) is continuous with
+pdf \(f_S\), then
+\[
+\expv{(S-d)_{+}}=\boxed{\int_{d}^{\infty}(x-d)f_S(x)\dd{x}}.
+\]
+If \(S\) is discrete with pmf \(f_S\), then
+\[
+\expv{(S-d)_{+}}=\boxed{\sum_{s_j>d}^{}(s_j-d)\cdot \prob{S=s_j}}.
+\]
+\end{itemize}
+
+\item If there is an interval in which the aggregate loss \(S\) has no
+probability to lie, the following result may simplify calculations.
+\begin{proposition}
+\label{prp:agg-loss-linear-interpol}
+Suppose that \(\prob{a<S<b}=0\) for some \(a<b\). Then, for any \(d\in[a,b]\),
+\[
+\expv{(S-d)_{+}}={\color{violet}\frac{b-d}{b-a}\cdot \expv{(S-a)_{+}}}+
+{\color{orange}\frac{d-a}{b-a}\cdot \expv{(S-b)_{+}}}.
+\]
+\begin{note}
+This means that the stop-loss premium can be calculated using \emph{linear
+interpolation}.
+\end{note}
+\end{proposition}
+\begin{center}
+\begin{tikzpicture}
+\draw[-Latex] (0,0) -- (10,0);
+\draw[fill] (2,0) circle [radius=0.5mm]
+node[above, violet]{\(\expv{(S-a)_{+}}\)}
+node[below, black]{\(a\)};
+\draw[fill] (8,0) circle [radius=0.5mm]
+node[above, orange]{\(\expv{(S-b)_{+}}\)}
+node[below, black]{\(b\)};
+\draw[fill] (6,0) circle [radius=0.5mm]
+node[above]{\(\expv{(S-d)_{+}}\)}
+node[below]{\(d\)};
+\draw[<->, orange] (2,-0.5) -- (6,-0.5)
+node[midway, below]{ratio: \(\displaystyle \frac{d-a}{b-a}\)};
+\draw[<->, violet] (6,-0.5) -- (8,-0.5)
+node[midway, below]{ratio: \(\displaystyle \frac{b-d}{b-a}\)};
+\end{tikzpicture}
+\end{center}
+\begin{pf}
+By assumption, the cdf
+\[
+F_S(x)=F_S(a)
+\]
+for any \(x\in[a,b)\). Hence,
+\begin{align*}
+\expv{(S-d)_{+}}&=\int_{d}^{\infty}[1-F_{S}({\color{violet}x})]\dd{x} \\
+&=\int_{a}^{\infty}[1-F_{S}(x)]\dd{x}-\int_{a}^{d}[1-F_{S}({\color{violet}a})]\dd{x} \\
+&=\expv{(S-a)_{+}}-[1-F_{S}(a)](d-a).
+\end{align*}
+Setting \(d=b\) here gives
+\[
+\expv{(S-b)_{+}}=\expv{(S-a)_{+}}-[1-F_{S}(a)](b-a)
+\implies 1-F_{S}(a)=\frac{\expv{(S-b)_{+}}-\expv{(S-a)_{+}}}{b-a},
+\]
+so it follows that
+\[
+\expv{(S-d)_{+}}=\expv{(S-a)_{+}}-\frac{\expv{(S-b)_{+}}-\expv{(S-a)_{+}}}{b-a}\cdot (d-a)
+=\frac{b-d}{b-a}\cdot \expv{(S-a)_{+}}+
+\frac{d-a}{b-a}\cdot \expv{(S-b)_{+}}.
+\]
+\end{pf}
+
+\item When the aggregate loss \(S\) is \emph{discrete}, the stop-loss premiums
+are related as follows.
+\begin{proposition}
+\label{prp:sl-prem-disc-agg-loss}
+Suppose that \(S\) is a discrete random variable with support
+\(\{0,h,2h,\dotsc\}\) for some fixed \(h>0\). Then, for any \(j\in\N_0\),
+\[
+\expv{(S-(j+1)h)_{+}}=\expv{(S-jh)_{+}}-h[1-F_{S}(jh)]
+\]
+where \(F_S\) is the cdf of \(S\).
+\end{proposition}
+\begin{pf}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[domain=0:5, axis lines=middle,
+xmin=-0.1, ymax=1.3, ymin=-0.5,
+ytick={0.2,0.3,0.5,1}, yticklabels={\(F_S(h)\),\(F_S(2h)\),\(F_S(3h)\),1},
+xtick={1,2,3,4}, xticklabels={\(h\),\(2h\),\(3h\),\(4h\)},
+xlabel=\(t\), ylabel=\(F_S(t)\),
+xlabel style={anchor=west},
+ylabel style={anchor=south}]
+\addplot[blue, name path=A1, domain=0:1]{0.1};
+\addplot[blue, name path=A2, domain=1:2]{0.2};
+\addplot[blue, name path=A3, domain=2:3]{0.3};
+\addplot[blue, name path=A4, domain=3:4]{0.5};
+\addplot[draw=none, name path=B]{1};
+\addplot[red, opacity=0.3] fill between[of=A2 and B, soft clip={domain=1:2}];
+\addplot[brown, opacity=0.3] fill between[of=A3 and B, soft clip={domain=2:3}];
+\addplot[brown, opacity=0.3] fill between[of=A4 and B, soft clip={domain=3:4}];
+\draw[blue] (0,0) circle [radius=0.8mm];
+\draw[blue, fill] (0,0.1) circle [radius=0.8mm];
+\draw[blue, fill] (1,0.2) circle [radius=0.8mm];
+\draw[blue, fill] (2,0.3) circle [radius=0.8mm];
+\draw[blue, fill] (3,0.5) circle [radius=0.8mm];
+\draw[blue] (1,0.1) circle [radius=0.8mm];
+\draw[blue] (2,0.2) circle [radius=0.8mm];
+\draw[blue] (3,0.3) circle [radius=0.8mm];
+\draw[blue] (4,0.5) circle [radius=0.8mm];
+\draw[-Latex] (3.5,0.2) -- (2.6,0.5)
+node[pos=-0.2]{area = \(\expv{(S-2h)_{+}}\)};
+\draw[-Latex] (1.5,-0.2) -- (1.5,0.5)
+node[pos=-0.2]{area = \(h[1-F_S(h)]\)};
+\draw[very thick, decorate,decoration={calligraphic brace, amplitude=5pt, raise=5pt}] (1,1) -- (4,1)
+node[midway, above=0.4cm]{area = \(\expv{(S-h)_{+}}\)};
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\begin{axis}[domain=0:5, axis lines=middle,
+xmin=-0.1, ymax=1.3, ymin=-0.5,
+ytick={0.2,0.3,0.5,1}, yticklabels={\(F_S(h)\),\(F_S(2h)\),\(F_S(3h)\),1},
+xtick={1,2,3,4}, xticklabels={\(h\),\(2h\),\(3h\),\(4h\)},
+xlabel=\(t\), ylabel=\(F_S(t)\),
+xlabel style={anchor=west},
+ylabel style={anchor=south}]
+\addplot[blue, name path=A1, domain=0:1]{0.1};
+\addplot[blue, name path=A2, domain=1:2]{0.2};
+\addplot[blue, name path=A3, domain=2:3]{0.3};
+\addplot[blue, name path=A4, domain=3:4]{0.5};
+\addplot[draw=none, name path=B]{1};
+\addplot[red, opacity=0.3] fill between[of=A3 and B, soft clip={domain=2:3}];
+\addplot[brown, opacity=0.3] fill between[of=A4 and B, soft clip={domain=3:4}];
+\draw[blue] (0,0) circle [radius=0.8mm];
+\draw[blue, fill] (0,0.1) circle [radius=0.8mm];
+\draw[blue, fill] (1,0.2) circle [radius=0.8mm];
+\draw[blue, fill] (2,0.3) circle [radius=0.8mm];
+\draw[blue, fill] (3,0.5) circle [radius=0.8mm];
+\draw[blue] (1,0.1) circle [radius=0.8mm];
+\draw[blue] (2,0.2) circle [radius=0.8mm];
+\draw[blue] (3,0.3) circle [radius=0.8mm];
+\draw[blue] (4,0.5) circle [radius=0.8mm];
+\draw[-Latex] (3.5,0.2) -- (3.6,0.7)
+node[pos=-0.2]{area = \(\expv{(S-3h)_{+}}\)};
+\draw[-Latex] (1.5,-0.2) -- (2.5,0.5)
+node[pos=-0.2]{area = \(h[1-F_S(2h)]\)};
+\draw[very thick, decorate,decoration={calligraphic brace, amplitude=5pt, raise=5pt}] (2,1) -- (4,1)
+node[midway, above=0.4cm]{area = \(\expv{(S-2h)_{+}}\)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+Based on the geometrical interpretation of expectation (area between the graph
+of \(F_S\) and the line \(y=1\), starting at \(t=d\) for \(\expv{(S-d)_{+}}\)),
+the result follows readily.
+\end{pf}
+\end{enumerate}

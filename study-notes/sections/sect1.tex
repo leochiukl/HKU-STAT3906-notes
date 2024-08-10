@@ -89,6 +89,40 @@ Let \(X\) be a nonnegative random variable with finite mean (i.e.,
 \expv{X}=\int_{0}^{\infty}S_X(t)\dd{t}.
 \]
 \end{proposition}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[domain=0:3, axis lines=middle,
+ymax=1.1,
+ytick={1}, yticklabels={1},
+xtick=\empty,
+xlabel=\(t\), ylabel=\(S_X(t)\),
+xlabel style={anchor=west},
+ylabel style={anchor=south}]
+\addplot[blue, name path=A]{e^(-x)};
+\addplot[draw=none, name path=B]{0};
+\addplot[brown, opacity=0.3] fill between[of=A and B];
+\draw[-Latex] (1.5,0.5) -- (0.6,0.2)
+node[pos=-0.1]{area = \(\expv{X}\)};
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\begin{axis}[domain=0:3, axis lines=middle,
+ymax=1.1,
+ytick={1}, yticklabels={1},
+xtick=\empty,
+xlabel=\(t\), ylabel=\(F_X(t)\),
+xlabel style={anchor=west},
+ylabel style={anchor=south}]
+\addplot[blue, name path=A]{1-e^(-x)};
+\addplot[draw=none, name path=B]{1};
+\addplot[brown, opacity=0.3] fill between[of=A and B];
+\draw[-Latex] (1.5,0.5) -- (0.6,0.8)
+node[pos=-0.1]{area = \(\expv{X}\)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
 \begin{pf}
 Since \(X\ge 0\), we have
 \[
@@ -107,9 +141,77 @@ Thus,
 where the second equality holds by Fubini's theorem.
 \end{pf}
 
-\begin{note}
-This result holds no matter \(X\) is discrete or continuous.
-\end{note}
+\begin{remark}
+\item This result holds no matter \(X\) is discrete or continuous.
+\item This result suggests a geometrical interpretation of mean of
+(nonnegative) \(X\): area under graph of \(S_X\) or area between the graph of
+\(y=F_X(t)\) and the line \(y=1\). This still holds when \(X\) is discrete!
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[domain=0:5, axis lines=middle,
+xmin=-0.1, ymax=1.1,
+ytick={1}, yticklabels={1},
+xtick=\empty,
+xlabel=\(t\), ylabel=\(S_X(t)\),
+xlabel style={anchor=west},
+ylabel style={anchor=south}]
+\addplot[blue, name path=A1, domain=0:1]{0.9};
+\addplot[blue, name path=A2, domain=1:2]{0.8};
+\addplot[blue, name path=A3, domain=2:3]{0.7};
+\addplot[blue, name path=A4, domain=3:4]{0.5};
+\addplot[draw=none, name path=B]{0};
+\addplot[brown, opacity=0.3] fill between[of=A1 and B, soft clip={domain=0:1}];
+\addplot[brown, opacity=0.3] fill between[of=A2 and B, soft clip={domain=1:2}];
+\addplot[brown, opacity=0.3] fill between[of=A3 and B, soft clip={domain=2:3}];
+\addplot[brown, opacity=0.3] fill between[of=A4 and B, soft clip={domain=3:4}];
+\draw[blue] (0,1) circle [radius=0.8mm];
+\draw[blue, fill] (0,0.9) circle [radius=0.8mm];
+\draw[blue, fill] (1,0.8) circle [radius=0.8mm];
+\draw[blue, fill] (2,0.7) circle [radius=0.8mm];
+\draw[blue, fill] (3,0.5) circle [radius=0.8mm];
+\draw[blue] (1,0.9) circle [radius=0.8mm];
+\draw[blue] (2,0.8) circle [radius=0.8mm];
+\draw[blue] (3,0.7) circle [radius=0.8mm];
+\draw[blue] (4,0.5) circle [radius=0.8mm];
+\draw[-Latex] (3.5,0.8) -- (1.6,0.5)
+node[pos=-0.1]{area = \(\expv{X}\)};
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\begin{axis}[domain=0:5, axis lines=middle,
+xmin=-0.1, ymax=1.1, ymin=-0.1,
+ytick={1}, yticklabels={1},
+xtick=\empty,
+xlabel=\(t\), ylabel=\(F_X(t)\),
+xlabel style={anchor=west},
+ylabel style={anchor=south}]
+\addplot[blue, name path=A1, domain=0:1]{0.1};
+\addplot[blue, name path=A2, domain=1:2]{0.2};
+\addplot[blue, name path=A3, domain=2:3]{0.3};
+\addplot[blue, name path=A4, domain=3:4]{0.5};
+\addplot[draw=none, name path=B]{1};
+\addplot[brown, opacity=0.3] fill between[of=A1 and B, soft clip={domain=0:1}];
+\addplot[brown, opacity=0.3] fill between[of=A2 and B, soft clip={domain=1:2}];
+\addplot[brown, opacity=0.3] fill between[of=A3 and B, soft clip={domain=2:3}];
+\addplot[brown, opacity=0.3] fill between[of=A4 and B, soft clip={domain=3:4}];
+\draw[blue] (0,0) circle [radius=0.8mm];
+\draw[blue, fill] (0,0.1) circle [radius=0.8mm];
+\draw[blue, fill] (1,0.2) circle [radius=0.8mm];
+\draw[blue, fill] (2,0.3) circle [radius=0.8mm];
+\draw[blue, fill] (3,0.5) circle [radius=0.8mm];
+\draw[blue] (1,0.1) circle [radius=0.8mm];
+\draw[blue] (2,0.2) circle [radius=0.8mm];
+\draw[blue] (3,0.3) circle [radius=0.8mm];
+\draw[blue] (4,0.5) circle [radius=0.8mm];
+\draw[-Latex] (3.5,0.2) -- (1.6,0.5)
+node[pos=-0.1]{area = \(\expv{X}\)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{remark}
+
 \item As a corollary, we have the following the result for \emph{discrete}
 random variable.
 \begin{corollary}
@@ -120,34 +222,46 @@ Let \(X\) be a nonnegative discrete random variable. Then,
 \]
 \end{corollary}
 \begin{pf}
-We have
-\[
-\expv{X}=\int_{0}^{\infty}S_X(t)\dd{t}
-=\int_{0}^{1}\underbrace{S_X(t)}_{\prob{X>0}}\dd{t}
-+\int_{1}^{2}\underbrace{S_X(t)}_{\prob{X>1}}\dd{t}
-+\int_{2}^{3}\underbrace{S_X(t)}_{\prob{X>2}}\dd{t}
-+\dotsb
-=\sum_{n=0}^{\infty}\prob{X>n}.
-\]
+\(\expv{X}\) is the area under \(S_X\):
 \begin{center}
 \begin{tikzpicture}
-\begin{axis}[domain=0:5, ytick={1, 0,-1,-2, -3, -4},
-yticklabels={\(1\), \(\prob{X>0}\), \(\prob{X>1}\), \(\prob{X>2}\),
-\(\prob{X>3}\), \(\prob{X>4}\)},
-title={\(S_X(t)\)}, xlabel=\(t\)]
-\addplot[blue, const plot, jump mark left, mark=*, samples=6]{-x};
-\addplot[blue, only marks, mark=o, samples=6]{-x+1};
-\draw[very thick, decorate,decoration={calligraphic brace, amplitude=5pt, raise=5pt}] (0,1) -- (0,0)
-node[midway, right=0.4cm]{\(\prob{X=0}\)};
-\draw[very thick, decorate,decoration={calligraphic brace, amplitude=5pt, raise=5pt}] (1,0) -- (1,-1)
-node[midway, right=0.4cm]{\(\prob{X=1}\)};
-\draw[very thick, decorate,decoration={calligraphic brace, amplitude=5pt, raise=5pt}] (2,-1) -- (2,-2)
-node[midway, right=0.4cm]{\(\prob{X=2}\)};
-\draw[very thick, decorate,decoration={calligraphic brace, amplitude=5pt, raise=5pt}] (3,-2) -- (3,-3)
-node[midway, right=0.4cm]{\(\prob{X=3}\)};
+\begin{axis}[domain=0:5, axis lines=middle,
+xmin=-0.1, ymax=1.1, ymin=-0.1,
+ytick={1,0.9,0.8,0.7,0.5}, yticklabels={1,\(\prob{X>0}\),\(\prob{X>1}\),\(\prob{X>2}\),\(\prob{X>3}\),\(\prob{X>4}\)},
+xtick={1,2,3,4},
+xlabel=\(t\), ylabel=\(S_X(t)\),
+xlabel style={anchor=west},
+ylabel style={anchor=south}]
+\addplot[blue, name path=A1, domain=0:1]{0.9};
+\addplot[blue, name path=A2, domain=1:2]{0.8};
+\addplot[blue, name path=A3, domain=2:3]{0.7};
+\addplot[blue, name path=A4, domain=3:4]{0.5};
+\addplot[draw=none, name path=B]{0};
+\addplot[brown, opacity=0.3] fill between[of=A1 and B, soft clip={domain=0:1}];
+\addplot[ForestGreen, opacity=0.3] fill between[of=A2 and B, soft clip={domain=1:2}];
+\addplot[violet, opacity=0.3] fill between[of=A3 and B, soft clip={domain=2:3}];
+\addplot[magenta, opacity=0.3] fill between[of=A4 and B, soft clip={domain=3:4}];
+\draw[blue] (0,1) circle [radius=0.8mm];
+\draw[blue, fill] (0,0.9) circle [radius=0.8mm];
+\draw[blue, fill] (1,0.8) circle [radius=0.8mm];
+\draw[blue, fill] (2,0.7) circle [radius=0.8mm];
+\draw[blue, fill] (3,0.5) circle [radius=0.8mm];
+\draw[blue] (1,0.9) circle [radius=0.8mm];
+\draw[blue] (2,0.8) circle [radius=0.8mm];
+\draw[blue] (3,0.7) circle [radius=0.8mm];
+\draw[blue] (4,0.5) circle [radius=0.8mm];
 \end{axis}
 \end{tikzpicture}
 \end{center}
+By summing up the areas of the rectangles, the area under \(S_X\) is
+\[
+{\color{brown}\prob{X>0}\cdot 1}
++{\color{ForestGreen}\prob{X>1}\cdot 1}
++{\color{violet}\prob{X>2}\cdot 1}
++{\color{magenta}\prob{X>3}\cdot 1}
++\dotsb
+=\sum_{n=0}^{\infty}\prob{X>n}.
+\]
 \end{pf}
 \end{enumerate}
 \subsection{Stop Loss Variables}
@@ -189,10 +303,10 @@ If \(X\) is continuous with pdf \(f_X\), then
 \]
 On the other hand, if \(X\) is discrete, then
 \[
-\expv{(X-d)_{+}}=\sum_{j}^{}(x_j-d)_{+}\prob{X=j}
+\expv{(X-d)_{+}}=\sum_{j}^{}(x_j-d)_{+}\prob{X=x_j}
 =\boxed{\sum_{x_j>d}^{}(x_j-d)\cdot p_j}.
 \]
-where \(p_j=\prob{X=j}\) and the sum is taken over all \(j\) where \(p_j>0\)
+where \(p_j=\prob{X=x_j}\) and the sum is taken over all \(j\) where \(p_j>0\)
 (with \(x_j>d\) for the second sum).
 
 \item We have the following result for the stop loss variable, which is
@@ -229,6 +343,38 @@ xmin=-0.5, ymin=-0.5, xlabel=\(X\), ylabel=\((X-d)_{+}\)]
 \end{tikzpicture}
 \end{center}
 \end{pf}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[domain=0:3, axis lines=middle,
+ymax=1.1,
+ytick={1}, yticklabels={1},
+xtick={0.5}, xticklabels={\(d\)},
+xlabel=\(t\), ylabel=\(S_X(t)\),
+xlabel style={anchor=west},
+ylabel style={anchor=south}]
+\addplot[blue, name path=A]{e^(-x)};
+\addplot[draw=none, name path=B]{0};
+\addplot[brown, opacity=0.3] fill between[of=A and B, soft clip={domain=0.5:3}];
+\draw[-Latex] (2,0.5) -- (1,0.1)
+node[pos=-0.1]{area = \(\expv{(X-d)_{+}}\)};
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+\begin{axis}[domain=0:3, axis lines=middle,
+ymax=1.1,
+ytick={1}, yticklabels={1},
+xtick={0.5}, xticklabels={\(d\)},
+xlabel=\(t\), ylabel=\(S_X(t)\),
+xlabel style={anchor=west},
+ylabel style={anchor=south}]
+\addplot[blue, name path=A]{1-e^(-x)};
+\addplot[draw=none, name path=B]{1};
+\addplot[brown, opacity=0.3] fill between[of=A and B, soft clip={domain=0.5:3}];
+\draw[-Latex] (2,0.5) -- (1,0.8)
+node[pos=-0.2]{area = \(\expv{(X-d)_{+}}\)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
 \end{enumerate}
 \subsection{Excess Loss Variables}
 \begin{enumerate}
