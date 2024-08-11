@@ -19,6 +19,7 @@
 \usepackage{xfp}
 \usepackage{centernot}
 \usepackage{cancel}
+\usepackage{footnote}
 \usepackage{tikz}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 \usepackage{todonotes}
@@ -71,6 +72,10 @@
 \newcommand*{\bin}[1]{\operatorname{Bin}\left(#1\right)}
 \newcommand*{\ber}[1]{\operatorname{Ber}\left(#1\right)}
 \newcommand*{\etnb}[1]{\operatorname{ETNB}\left(#1\right)}
+\newcommand*{\vatr}[2]{\operatorname{VaR}_{#1}\left(#2\right)}
+\newcommand*{\cte}[2]{\operatorname{CTE}_{#1}\left(#2\right)}
+\newcommand*{\tvar}[2]{\operatorname{TVaR}_{#1}\left(#2\right)}
+\newcommand*{\esf}[2]{\operatorname{ESF}_{#1}\left(#2\right)}
 
 \newenvironment{remark}{\sffamily \underline{Remarks}:\begin{itemize}}{\end{itemize}}
 \newenvironment{note}{\sffamily\lbrack Note:}{\!\!\rbrack}
@@ -93,6 +98,7 @@
 \makeindex[name=def, title=Concepts and Terminologies]
 \tikzexternalize[prefix=figures/]
 \setenumerate[1]{label=\thesubsection.\arabic*~, ref=[\thesubsection.\arabic*]}
+\makesavenoteenv{tabular}
 
 %For links in index page to link to line
 %https://tex.stackexchange.com/questions/405813/link-to-line-instead-of-page
