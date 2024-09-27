@@ -68,7 +68,7 @@ P_S(t)&=\sum_{k=0}^{\infty}t^k{\color{violet}\prob{S=k}}\\
 &=\sum_{n=0}^{\infty}\prob{N=n}\sum_{k=0}^{\infty}t^k\prob{M_1+\dotsb+M_n=k|N=n}\\
 &=\sum_{n=0}^{\infty}\prob{N=n}{\color{orange}\sum_{k=0}^{\infty}t^k\prob{M_1+\dotsb+M_n=k}}&\text{(by independence)}\\
 &=\sum_{n=0}^{\infty}\prob{N=n}{\color{orange}P_{M_1+\dotsb+M_n}(t)}\\
-&=\sum_{n=0}^{\infty}\prob{N=n}[P_{M}(t)]^n&\text{(\cref{prp:pgf-sum}, i.i.d.\ assumption)}\\
+&=\sum_{n=0}^{\infty}\prob{N=n}[P_{M}(t)]^n&\text{(\cref{thm:pgf-sum}, i.i.d.\ assumption)}\\
 &=\expv{[P_M(t)]^N}\\
 &=P_N(P_M(t)).
 \end{align*}
@@ -253,7 +253,7 @@ Q(t)=\sum_{n=0}^{\infty}t^nq(n)
 =\frac{\lambda_1}{\lambda}Q_1(t)+\dotsb+\frac{\lambda_k}{\lambda}Q_k(t).
 \]
 
-Since \(S_1,\dotsc,S_k\) are independent, by \cref{prp:pgf-sum}, the pgf of
+Since \(S_1,\dotsc,S_k\) are independent, by \cref{thm:pgf-sum}, the pgf of
 \(S\) is
 \[
 P_S(t)=\prod_{i=1}^{k}P_{S_i}(t)

@@ -351,10 +351,11 @@ We have
 \begin{align*}
 \cte{\alpha}{X}=\expv{X|X>\vatr{\alpha}{X}}
 &=\vatr{\alpha}{X}+\underbrace{\expv{X-\vatr{\alpha}{X}|X>\vatr{\alpha}{X}}}_{e_X(\vatr{\alpha}{X})} \\
-&\overset{\labelcref{it:mrl-exp-sl-relation}}{=}\vatr{\alpha}{X}+\frac{\esf{\alpha}{X}}{1-F_X(\vatr{\alpha}{X})}\\
+&\overset{
+\text{\labelcref{it:mrl-exp-sl-relation}}}{=}\vatr{\alpha}{X}+\frac{\esf{\alpha}{X}}{1-F_X(\vatr{\alpha}{X})}\\
 &=\vatr{\color{violet}F_X(\vatr{\alpha}{X})}{X}+\frac{1}{1-{\color{violet}F_X(\vatr{\alpha}{X})}}
 \cdot \esf{\color{violet}F_X(\vatr{\alpha}{X})}{X}\\
-&\overset{\labelcref{it:tvar-var-esf}}{=}\tvar{\color{violet}F_X(\vatr{\alpha}{X})}{X}.
+&\overset{\text{\labelcref{it:tvar-var-esf}}}{=}\tvar{\color{violet}F_X(\vatr{\alpha}{X})}{X}.
 \end{align*}
 For the second-to-last equality, see the proof of \labelcref{it:cte-var-esf}.
 \end{pf}
@@ -364,7 +365,8 @@ For the second-to-last equality, see the proof of \labelcref{it:cte-var-esf}.
 (when \(F_X(\vatr{\alpha}{X})<1\))
 
 \begin{pf}
-Apply \labelcref{it:cte-tvar} followed by \labelcref{it:tvar-var-esf}, and note that
+Apply \labelcref{it:cte-tvar} and then \labelcref{it:tvar-var-esf}. Next, note
+that
 \[
 \vatr{F_X(\vatr{\alpha}{X})}{X}=\min\{{\color{violet}x}\ge 0:F_X({\color{violet}x})\ge F_X({\color{violet}\vatr{\alpha}{X}})\}
 ={\color{violet}\vatr{\alpha}{X}},

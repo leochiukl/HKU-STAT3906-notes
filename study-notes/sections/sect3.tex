@@ -86,7 +86,7 @@ Thus, by \cref{prp:pgf-gen-prob}, for any \(m\in\N_0\),
 which means that \(M\) and \(N\) have the same distribution.
 \end{pf}
 
-\item Pgf also has a (partial) ``moment generating'' property as follows.
+\item Pgf also has a ``moment generating'' property as follows.
 \begin{proposition}
 \label{prp:pgf-gen-mom}
 Let \(P_N\) be the pgf of a nonnegative discrete random variable \(N\).  Then,
@@ -227,10 +227,10 @@ turns out that by performing the ``slicing'' in a certain way, the resulting
 \label{thm:pois-thinning}
 Let \(N\sim\pois{\lambda}\) be the number of claims. Suppose that each claim is
 independently classified into exactly one of type \(1,\dotsc,m\) with
-probabilities \(p_1,\dotsc,p_m\) respectively (where \(p_1+\dotsb+p_m=1\)). Let
+probabilities \(a_1,\dotsc,a_m\) respectively (where \(a_1+\dotsb+a_m=1\)). Let
 \(N_1,\dotsc,N_m\) be the numbers of claims with types \(1,\dotsc,m\)
 respectively. Then, \(N_1,\dotsc,N_m\) are independent Poisson random variables
-with parameters \(\lambda p_1,\dotsc,\lambda p_m\) respectively.
+with parameters \(\lambda a_1,\dotsc,\lambda a_m\) respectively.
 \end{theorem}
 \begin{center}
 \begin{tikzpicture}
@@ -239,15 +239,15 @@ with parameters \(\lambda p_1,\dotsc,\lambda p_m\) respectively.
 \node[draw] (t2) at (-1,-2) {type 2};
 \node[] () at (1,-1) {\(\cdots\)};
 \node[draw] (tm) at (3,-2) {type \(m\)};
-\node[] () at (-4,-3) {\(N_1\sim\pois{\lambda p_1}\)};
-\node[] () at (-1,-3) {\(N_2\sim\pois{\lambda p_2}\)};
-\node[] () at (3,-3) {\(N_m\sim\pois{\lambda p_m}\)};
+\node[] () at (-4,-3) {\(N_1\sim\pois{\lambda a_1}\)};
+\node[] () at (-1,-3) {\(N_2\sim\pois{\lambda a_2}\)};
+\node[] () at (3,-3) {\(N_m\sim\pois{\lambda a_m}\)};
 \draw[-Latex] (n.south west) -- (t1.north)
-node[midway, left=0.2cm]{\(p_1\)};
+node[midway, left=0.2cm]{\(a_1\)};
 \draw[-Latex] (n.south) -- (t2.north)
-node[midway, left=0.2cm]{\(p_2\)};
+node[midway, left=0.2cm]{\(a_2\)};
 \draw[-Latex] (n.south east) -- (tm.north)
-node[midway, right=0.2cm]{\(p_m\)};
+node[midway, right=0.2cm]{\(a_m\)};
 \draw[very thick, decorate,decoration={mirror, calligraphic brace, amplitude=5pt, raise=10pt}] (-4,-3) -- (3,-3)
 node[midway, below=0.4cm]{independent};
 \end{tikzpicture}
@@ -580,7 +580,7 @@ The pmf of \(N\sim\bin{m,q}\) is given by
 \[
 p_k=\prob{N=k}=\binom{m}{k}q^k(1-q)^{n-k}
 \]
-for any \(k=0,1,\dotsc,n\).
+for any \(k=0,1,\dotsc,m\).
 
 \begin{remark}
 \item \(N\sim\bin{m,q}\) can be more practically interpreted as the number of claims
@@ -594,7 +594,7 @@ notation of death/claim probability). So, to ``match'' with this case, we use
 \(q\) to denote the ``success''/claim probability here.
 \end{remark}
 \item \label{it:bin-pgf}
-Since \(N\sim\bin{m,q}\) has the same distribution as a sum of \(n\)
+Since \(N\sim\bin{m,q}\) has the same distribution as a sum of \(m\)
 independent Bernoulli random variables with \(\ber{q}\equiv\bin{1,q}\) distribution, and the
 pgf of a random variable with \(\ber{q}\) distribution is
 \(t^0(1-q)+t^1q=1+q(t-1)\), it follows that the pgf of \(N\sim\bin{m,q}\) is
@@ -615,7 +615,7 @@ Thus, we can obtain the mean and variance of \(N\sim\bin{m,q}\) as follows.
 \item \(\expv{N}=P_N'(1)=\boxed{mq}\).
 \item \(\expv{N(N-1)}=P_N''(1)=m(m-1)q^2\implies
 \vari{N}=\expv{N^2}-(\expv{N})^2
-=m(m-1)q^2+nq-(mq)^2
+=m(m-1)q^2+mq-(mq)^2
 =\boxed{mq(1-q)}\).
 \end{itemize}
 \end{enumerate}
