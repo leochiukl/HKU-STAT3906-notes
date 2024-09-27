@@ -32,8 +32,8 @@ P_N(t)=\expv{t^N}=\sum_{k=0}^{\infty}t^kp_k.
 \end{remark}
 \item The following result suggests the ``probability generating'' property of
 pgf:
-\begin{theorem}
-\label{thm:pgf-gen-prob}
+\begin{proposition}
+\label{prp:pgf-gen-prob}
 Let \(P_N\) be the pgf of a nonnegative discrete random variable \(N\). Then,
 the pmf of \(N\) is given by
 \[
@@ -41,7 +41,7 @@ p_m=\frac{P_N^{(m)}(0)}{m!}
 \]
 for any \(m\in\N_0\) (where \(P_N^{(m)}\) denote the \(m\)th derivative of
 \(P_N\) with \(P_N^{(0)}=P_N\)).
-\end{theorem}
+\end{proposition}
 \begin{pf}
 Fix any \(m\in\N_0\). Firstly, if \(m=0\), we have \(\displaystyle
 p_0=P_N(0)=\frac{P_N(0)}{0!}\). So, henceforth consider the case where
@@ -49,7 +49,7 @@ p_0=P_N(0)=\frac{P_N(0)}{0!}\). So, henceforth consider the case where
 \[
 \dv[m]{}{t}t^kp_k
 =\begin{cases}
-k(k-1)\dotsb(k-m+1)t^{k-m}&\text{if \(k\ge m\)}\\
+k(k-1)\dotsb(k-m+1)t^{k-m}&\text{if \(k\ge m\)};\\
 0&\text{if \(k<m\)}.
 \end{cases}
 \]
@@ -69,7 +69,7 @@ Recall that \(0^0=1\).
 \end{note}
 \end{pf}
 
-\item As a corollary of \cref{thm:pgf-gen-prob}, pgf gives a sufficient
+\item As a corollary of \cref{prp:pgf-gen-prob}, pgf gives a sufficient
 condition for equality in distribution:
 \begin{corollary}
 \label{cor:pgf-equal-dist}
@@ -79,7 +79,7 @@ distribution.
 \end{corollary}
 \begin{pf}
 By assumption, we have \(P_M^{(m)}(0)=P_N^{(m)}(0)\) for any \(m\in\N_0\).
-Thus, by \cref{thm:pgf-gen-prob}, for any \(m\in\N_0\),
+Thus, by \cref{prp:pgf-gen-prob}, for any \(m\in\N_0\),
 \[
 \prob{M=m}=\prob{N=m},
 \]
@@ -114,8 +114,8 @@ P_N''(1)=1(0)p_1+2(1)p_2+3(2)p_3+4(3)p_4+\dotsb=\expv{N(N-1)}.
 \end{pf}
 \item The pgf of a sum of independent nonnegative discrete random variables can
 be obtained by the following formula.
-\begin{proposition}
-\label{prp:pgf-sum}
+\begin{theorem}
+\label{thm:pgf-sum}
 Let \(N_1,\dotsc,N_m\) be independent nonnegative discrete random variables,
 and let \(S=N_1+\dotsb+N_m\). Then,
 \[
@@ -123,7 +123,7 @@ P_S(t)=P_{N_1}(t)\dotsb P_{N_m}(t)
 \]
 for any \(t\) (at which all terms exist), where \(P_N\) denotes the pgf of
 \(N\).
-\end{proposition}
+\end{theorem}
 \begin{pf}
 First note that \(t^{N_1},\dotsc,t^{N_m}\) are also independent. Thus,
 \[
@@ -204,7 +204,7 @@ parameters \(\lambda_1,\dotsc,\lambda_k\) respectively. Then, the sum
 \end{theorem}
 \begin{pf}
 We prove this using pgf. We denote pgf of \(N\) by \(P_N(t)\).  By
-\cref{prp:pgf-sum}, we have
+\cref{thm:pgf-sum}, we have
 \[
 P_S(t)=P_{N_1}(t)\dotsb P_{N_k}(t).
 \]
@@ -601,7 +601,7 @@ pgf of a random variable with \(\ber{q}\) distribution is
 \[
 P_N(t)=\boxed{[1+q(t-1)]^m}
 \]
-by \cref{prp:pgf-sum}.
+by \cref{thm:pgf-sum}.
 
 \item \label{it:bin-mean-var}
 Based on the pgf, we know

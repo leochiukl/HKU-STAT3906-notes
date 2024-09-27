@@ -35,9 +35,9 @@ f_X(x)=\sum_{i=1}^{n}f_{X|\Lambda}(x|\lambda_i)\prob{\Lambda=\lambda_i}
 given \(\Lambda=\lambda_i\).
 \end{note}
 
-(The equality holds since each summand is the joint probability function
-\(f_{X,\Lambda}(x,\lambda_i)\)i, so summing them up gives the marginal
-probability function \(f_{X_i}(x)\).)
+The equality holds since each summand is the joint probability function
+\(f_{X,\Lambda}(x,\lambda_i)\), so summing them up gives the marginal
+probability function \(f_{X_i}(x)\).
 
 This induces mixing of finitely many (all continuous/all discrete) random
 variables using (continuous or discrete) \(X\) and discrete \(\Lambda\).
@@ -67,9 +67,9 @@ can be written as
 \[
 f_X(x)=\boxed{\int_{-\infty}^{\infty}f_{X|\Lambda}(x|\lambda)f_{\Lambda}(\lambda)\dd{\lambda}}.
 \]
-(Here the integrand is the joint probability function
+Here the integrand is the joint probability function
 \(f_{X,\Lambda}(x,\lambda)\), so integrating it gives the marginal probability
-function \(f_X(x)\).)
+function \(f_X(x)\).
 
 \item We can also express the mixing using cdf as suggested by the following
 result.
@@ -143,7 +143,7 @@ find an expression for \(\expv{g(X)|\Lambda=\lambda}\) and replace every
 \(\Lambda=\lambda\) is
 \[
 \vari{g(X)|\Lambda=\lambda}
-=\expv{(g(X)-(\expv{g(X)|\Lambda=\lambda})^{2}|\Lambda=\lambda}
+=\expv{\qty[g(X)-(\expv{g(X)|\Lambda=\lambda})]^{2}|\Lambda=\lambda}
 =\expv{g(X)^2|\Lambda=\lambda}-(\expv{g(X)|\Lambda=\lambda})^2.
 \]
 \begin{note}

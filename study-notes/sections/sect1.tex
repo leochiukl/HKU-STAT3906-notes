@@ -288,10 +288,10 @@ loss variable represents the payment made by \faIcon{building}:
 \item If the loss \(X>d\), then the payment amount is \(X-d\).
 \end{itemize}
 \begin{note}
-By having such insurance, the policyholder \faIcon{user} suffers \emph{at most}
-\(d\) dollars of loss, so the insurance ``stops'' the loss suffered by
-\faIcon{user} (from \(d\) dollars onwards) \faIcon{arrow-right} hence ``stop
-loss''.
+By having such insurance (called \defn{stop-loss insurance}), the policyholder
+\faIcon{user} suffers \emph{at most} \(d\) dollars of loss, so the insurance
+``stops'' the loss suffered by \faIcon{user} (from \(d\) dollars onwards)
+\faIcon{arrow-right} hence ``stop loss''.
 \end{note}
 
 \item \label{it:stop-loss-direct-exp-fmlas}
@@ -389,14 +389,29 @@ X-d&\text{if \(X>d\)}
 \end{cases}
 =(X-d|X>d).
 \]
-\begin{note}
-The excess loss variable gives the amount of loss in excess of the deductible,
+\begin{remark}
+\item The excess loss variable gives the amount of loss in excess of the deductible,
 \emph{given that} such excess of loss exists. If there is no such excess of
 loss, we \emph{do not define} excess loss variable.
 
-More precisely, the excess loss variable \(Y\) has the same distribution as the
+\item More precisely, the excess loss variable \(Y\) has the same distribution as the
 \emph{conditional} distribution of \(X-d\) given \(X>d\).
-\end{note}
+\end{remark}
+
+\item The ``form'' of excess loss variable is similar to that of stop loss
+variable. Indeed, it also describes the ``payment'' made by the insurer
+\faIcon{building} for a stop-loss insurance, by from \faIcon{building}'s
+perspective. When \(X>d\), then there is no difference from the stop loss
+variable: The payment is of amount \(X-d\).
+
+However, when \(X\le d\), since in practice the policyholder \faIcon{user}
+\emph{would not even report the loss to \faIcon{building}} (as \faIcon{user}
+needs to bear the full responsibility of it anyway). Hence, such losses are
+\emph{not found} in \faIcon{building}'s record (database \faIcon{database},
+spreadsheet \faIcon{file-excel}, etc.) \faIcon{arrow-right} they \emph{do not
+exist} from \faIcon{building}'s perspective \faIcon{arrow-right} ``undefined''
+payment amount.
+
 \item We are usually interested in studying the \emph{expected value} of the
 excess loss variable, which is called the \defn{mean excess loss function} (or
 \defn{mean residual lifetime} (MRL)/``complete expectation of life'' in life
@@ -546,7 +561,7 @@ where \(S_X\) is the survival function of \(X\).
 \subsection{Comparing Tail Thickness of Distributions}
 \begin{enumerate}
 \item An important consideration in risk management for an insurer
-\faIcon{building} is to properly quantify the ``thickness'' of the right tail
+\faIcon{building} is to properly quantify the ``thickness'' of the (right) tail
 of distribution of loss \(X\) since it can greatly impact the financial
 position of \faIcon{building}. The higher probability assigned to extremely
 large values, the ``thicker''/``heavier'' the right tail.
@@ -554,25 +569,48 @@ large values, the ``thicker''/``heavier'' the right tail.
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[domain=-5:5, samples=100, axis lines=middle, xtick=\empty, ytick=\empty, 
-xmin=-5.5, xmax=5.5, ymin=-0.1, ymax=0.5,
+xmin=-5.5, xmax=5.5, ymin=-0.1, ymax=0.5, title={Density functions},
 legend entries={thinner tails, thicker tails}, legend style={legend pos=outer north east}
 ]
 \addplot[green]{e^(-x^2/2)/sqrt(2*pi)};
 \addplot[red]{1/(pi*(1+x^2))};
 \end{axis}
 \end{tikzpicture}
+\begin{tikzpicture}
+\begin{axis}[domain=1:5, samples=100, axis lines=middle, xtick=\empty, ytick=\empty,
+ymin=-0.1, ymax=1.1, xmin=-0.5, xmax=5.5, title={Survival functions},
+legend entries={thinner tails, thicker tails}, legend style={legend pos=outer north east}
+]
+\addplot[green]{1/x^3};
+\addplot[red]{1/x};
+\end{axis}
+\end{tikzpicture}
 \end{center}
+\begin{note}
+One can view the notion of ``tail thickness'' from the perspective of (right)
+tail of density function or (right) tail of survival function:
+\begin{itemize}
+\item \emph{tail of density function}: thicker tail \faIcon{arrow-right} more probability ``assigned'' to extremely positive values
+\item \emph{tail of survival function}: thicker tail \faIcon{arrow-right} given
+a fixed extremely large value, higher probability for the random variable to
+exceed it
+\end{itemize}
+It turns out that these two approaches of comparing tail thickness are
+consistent (based on the ``limit of ratio'' method).
+\end{note}
 \item To \emph{compare} tail thickness, we can consider the following methods:
 \begin{enumerate}
 \item comparison based on existence and non-existence of moments
 \item comparison based on limit of ratio of survival functions
-\item comparison based on hazard rate function (``force of mortality'' in life contingencies)
-\item comparison based on MRL (or mean excess loss function)
+\item ``comparison'' based on hazard rate function (``force of mortality'' in life contingencies)
+\item ``comparison'' based on MRL (or mean excess loss function)
 \end{enumerate}
-\begin{note}
-Here we focus on continuous random variables. But the methods can also be used
+\begin{remark}
+\item Here we focus on continuous random variables. But the methods can also be used
 for discrete random variables in a similar manner.
-\end{note}
+\item More properly, the last two methods are indeed \emph{classification}
+methods.
+\end{remark}
 \item First we consider comparison based on moments. Here we focus on a
 nonnegative loss \(X\). Recall that the \(k\)th raw moment of \(X\) with pdf
 \(f_X\) is
@@ -689,6 +727,11 @@ To compute the limit \(\displaystyle \lim_{t\to \infty}\frac{S_X(t)}{S_Y(t)}
 \]
 where \(f_X\) and \(f_Y\) are pdfs of \(X\) and \(Y\) respectively.
 
+\begin{note}
+This suggests that for this method, comparing the right tails of survival
+functions is the same as comparing the right tails of density functions.
+\end{note}
+
 \item Next, we consider the comparison based on hazard rate
 function. The \defn{hazard rate function} of a random variable \(X\) is
 \[
@@ -702,54 +745,52 @@ It is ``force of mortality'' in life contingencies.
 
 To interpret the hazard rate, note that
 \[
-\prob{x<X\le x+h|X>x}=\frac{\prob{x<X\le x+h}}{S_X(x)}
-\approx\frac{f(x)h}{S_X(x)}=h_X(x)h
+\prob{x<X\le x+\Delta x|X>x}=\frac{\prob{x<X\le x+\Delta x}}{S_X(x)}
+\approx\frac{f(x)\Delta x}{S_X(x)}=h_X(x)\Delta x
 \]
-for small \(h\). Thus, in infinitesimal, \(h_X(x)\dd{x}\) gives the probability
-that \(X\in(x,x+\dd{x}]\) (``failing instantaneously'') given \(X>x\) (``surviving'').
-Hence, the hazard rate can be regarded as \emph{instantaneous failure rate}.
+for small \(\Delta x\). Thus, in infinitesimal (\(\Delta x\to \dd{x}\)),
+\(h_X(x)\dd{x}\) gives the probability that \(X\in(x,x+\dd{x}]\) (``failing
+instantaneously'') given \(X>x\) (``surviving'').  Hence, the hazard rate can
+be regarded as \emph{instantaneous failure rate}.
 
 \item To assess the tail thickness based on hazard rate function, consider the
 following.
 \begin{itemize}
-\item If \(h_X(x)\) is a decreasing (or non-increasing) function, then for
-larger \(x\), given \(X>x\), it is \emph{less} likely for \(X\in(x,x+\dd{x}]\)
-and hence \emph{more} likely for \(X>x+\dd{x}\) (higher probability for
-\emph{even larger} \(x\)) \faIcon{arrow-right} \(X\) has a thick right tail.
-
-\item If \(h_X(x)\) is an increasing (or non-decreasing) function, then for
-larger \(x\), given \(X>x\), it is \emph{more} likely for \(X\in(x,x+\dd{x}]\)
-and hence \emph{less} likely for \(X>x+\dd{x}\) (lower probability for
-\emph{even larger} \(x\)) \faIcon{arrow-right} \(X\) has a thin right tail.
+\item \(h_X(x)\) is a \vc{decreasing} (or non-increasing) in \(x\)
+\faIcon{arrow-right} \vc{less} likely to fail/``die'' as the ``lifetime'' increases
+\faIcon{arrow-right} \vc{more} likely to have a long ``lifetime'' \faIcon{arrow-right}
+\(X\) has a \vc{thick} right tail.
+\item \(h_X(x)\) is a \vc{increasing} (or non-increasing) in \(x\)
+\faIcon{arrow-right} \vc{more} likely to fail/``die'' as the ``lifetime'' increases
+\faIcon{arrow-right} \vc{less} likely to have a long ``lifetime'' \faIcon{arrow-right}
+\(X\) has a \vc{thin} right tail.
 \end{itemize}
-\begin{note}
-Here ``less'' and ``more'' likely are in a non-strict sense: They also include
-the case ``as likely''.
-\end{note}
 \item A random variable \(X\) has \defn{decreasing failure rate} (DFR) if
 \(h_X(x)\) is decreasing in \(x\), and has \defn{increasing failure rate} (IFR)
 if \(h_X(x)\) is increasing in \(x\).
 
-Hence, \(X\) has thick (thin) right tail if \(X\) has DFR (IFR).
+Hence, \(X\) is \emph{classified} into a thick-tail (thin-tail) category if
+\(X\) has DFR (IFR).
 
 \item Lastly, we consider the comparison based on mean residual lifetime (MRL).
 \begin{itemize}
-\item If \(e_X(d)\) is decreasing in \(d\), then it suggests that there is not
-much excess loss (on average) once \(d\) is large \faIcon{arrow-right} not much
-probability is assigned to large \(x\) \faIcon{arrow-right} \(X\) has a thin
+\item \(e_X(d)\) is \vc{decreasing} in \(d\) \faIcon{arrow-right} \vc{shorter} ``life
+expectancy'' as the ``lifetime'' increases \faIcon{arrow-right} \vc{less}
+likely to have a long ``lifetime'' \faIcon{arrow-right} \(X\) has a \vc{thin}
 right tail.
 
-\item If \(e_X(d)\) is increasing in \(d\), then it suggests that there is
-still more excess loss (on average) when \(d\) gets larger \faIcon{arrow-right}
-quite a lot of probability is assigned to large \(x\) \faIcon{arrow-right}
-\(X\) has a thick right tail.
+\item \(e_X(d)\) is \vc{increasing} in \(d\) \faIcon{arrow-right} \vc{longer}
+``life expectancy'' as the ``lifetime'' increases \faIcon{arrow-right}
+\vc{more} likely to have a long ``lifetime'' \faIcon{arrow-right} \(X\) has a
+\vc{thick} right tail.
 \end{itemize}
 
 \item A random variable \(X\) has \defn{decreasing mean residual lifetime} (DMRL) if
 \(e_X(d)\) is decreasing in \(d\), and has \defn{increasing mean residual
 lifetime} (IMRL) if \(e_X(d)\) is increasing in \(d\).
 
-Hence, \(X\) has thick (thin) right tail if \(X\) has IMRL (DMRL).
+Hence, \(X\) is \emph{classified} into a thick-tail (thin-tail) category if
+\(X\) has IMRL (DMRL).
 
 \item Naturally, one would then be interested in the relationship between
 DFR/IFR and DMRL/IMRL. This is given as follows.
@@ -778,7 +819,7 @@ so
 \]
 \begin{note}
 The formula corresponding to this in life contingencies is
-\(S_x(t)=\exp(-\int_{0}^{t}\mu_{x+s}\dd{s})\).
+\(\displaystyle S_x(t)=\exp(-\int_{0}^{t}\mu_{x+s}\dd{s})\).
 \end{note}
 
 Now, assume \(X\) has DFR and fix any \(t\ge 0\). Then, from the equation above
