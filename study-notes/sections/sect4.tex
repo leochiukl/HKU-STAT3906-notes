@@ -8,16 +8,16 @@ distributions for modelling claim frequency \(N\).
 \subsection{The \((a,b,0)\) Class}
 \begin{enumerate}
 \item Let \(N\) be a nonnegative discrete random variable, and let
-\(p_k=\prob{N=k}\) for any \(k\in\N_0\). Then, (the distribution of) \(N\) is
-in the \defn{\((a,b,0)\) class} if there exist constants \(a\) and \(b\) such
-that
+\(p_k=\prob{N=k}\) for any \(k=0,1,\dotsc\). Then, the distribution of \(N\) is in
+the \defn{\((a,b,0)\) class} if there exist constants \(a\) and \(b\) such that
 \[
-\frac{p_k}{p_{k-1}}=a+\frac{b}{k},\quad\text{for any \(k\ge 1\) (in the support of \(N\))}.
+p_k=\qty(a+\frac{b}{k})p_{k-1},\quad\text{for any \(k=1,2,\dotsc\)}.
 \]
 \begin{note}
 The relationship above starts with the pair \(p_{\color{violet} 0}\) and
 \(p_1\), so the class is called \((a,b,{\color{violet}0})\).
 \end{note}
+
 \item For a random variable \(N\) in the \((a,b,0)\) class, once \(a\) and
 \(b\) are fixed, the probabilities \(p_1,p_2,\dotsc\) can all be deduced from
 \(p_0\). Furthermore, we can deduce the value of \(p_0\) by the fact that
@@ -25,25 +25,24 @@ The relationship above starts with the pair \(p_{\color{violet} 0}\) and
 after \(a\) and \(b\) are fixed.
 
 Hence, the values of \(a\) and \(b\) can be used to uniquely characterize a
-distribution (provided that it is in the \((a,b,0)\) class).
+distribution in the \((a,b,0)\) class.
 
 \item An important result regarding the \((a,b,0)\) class is as follows.
 \begin{theorem}
 \label{thm:ab0-dist}
 Poisson, negative binomial, and binomial distributions are the \emph{only}
-(non-degenerate\footnote{This means that a random variable following the
-distribution is not non-random.}) distributions in the \((a,b,0)\) class.
+distributions in the \((a,b,0)\) class.
 \end{theorem}
 \begin{pf}
 Omitted. (See, e.g., \textcite{sundt1981further}.)
 \end{pf}
 \item Although here we do not show Poisson, negative binomial, and binomial
 distributions are the \emph{only} distributions in the \((a,b,0)\) class, we
-will show that they \emph{are} (without the ``only'' part) distributions in the
-\((a,b,0)\) class in the following.
+will show that they \emph{are} distributions in the \((a,b,0)\) class in the
+following.
 
 \item \label{it:pois-ab0}
-For \(N\sim\pois{\lambda}\), for any \(k\in\N\),
+For \(N\sim\pois{\lambda}\), for any \(k=1,2,\dotsc\),
 \[
 \frac{p_k}{p_{k-1}}=\frac{e^{-\lambda}\lambda^k/k!}{e^{-\lambda}\lambda^{k-1}/(k-1)!}
 ={\color{violet}0}+\frac{\color{orange}\lambda}{k}.
@@ -52,7 +51,7 @@ Hence, \(N\sim\pois{\lambda}\) is in the \((a,b,0)\) class with \(\color{violet}
 \(\color{orange}b=\lambda\).
 
 \item \label{it:nb-ab0}
-For \(N\sim\nb{r,\beta}\), for any \(k\in\N\),
+For \(N\sim\nb{r,\beta}\), for any \(k=1,2,\dotsc\),
 \begin{align*}
 \frac{p_k}{p_{k-1}}
 &=\frac{\displaystyle \binom{r+k-1}{k}\qty(\frac{1}{1+\beta})\qty(\frac{\beta}{1+\beta})^{k}}
@@ -76,7 +75,7 @@ For \(N\sim\bin{m,q}\), for any \(k=1,2,\dotsc,n\),
 Hence, \(N\sim\bin{m,q}\) is in the \((a,b,0)\) class with
 \(\displaystyle \color{violet}a=-\frac{q}{1-q}<0\) and
 \(\displaystyle \color{orange}b=(m+1)\frac{q}{1-q}\).
-\item By \cref{thm:ab0-dist}, \labelcref{it:pois-ab0,it:nb-ab0,it:bin-ab0}
+\item By \Cref{thm:ab0-dist}, \labelcref{it:pois-ab0,it:nb-ab0,it:bin-ab0}
 include all possibilities for distributions in the \((a,b,0)\) class. Notably,
 if a distribution in the \((a,b,0)\) class has a \emph{positive}
 (\emph{negative}) \(a\), it must be \emph{negative binomial} (\emph{binomial})
@@ -87,11 +86,10 @@ We do \underline{not} have \(a<0\implies\text{negative binomial distributed}\)!
 
 \item We can rewrite the equation in the definition of \((a,b,0)\) class to
 \[
-k\cdot\frac{p_k}{p_{k-1}}=ka+b\quad\text{for any \(k\ge 1\)},
+k\cdot\frac{p_k}{p_{k-1}}=ka+b\quad\text{for any \(k=1,2,\dotsc\)},
 \]
 so \(\displaystyle k\cdot \frac{p_k}{p_{k-1}}\) is linearly related to \(k\).
 
-\begin{note}
 Practically, this is helpful for having a quick check on whether the actual
 claim frequency in practice is in the \((a,b,0)\) class as follows.
 First note the following approximated relationship:
@@ -99,14 +97,13 @@ First note the following approximated relationship:
 k\cdot \frac{\widehat{p}_k}{\widehat{p}_{k-1}}\approx ka+b
 \]
 where \(\displaystyle \widehat{p}_k=\frac{\text{no.\ of policies with \(k\)
-claims}}{\text{total no.\ of policies considered}}\) for any \(k\in\N_0\).
+claims}}{\text{total no.\ of policies considered}}\) for any \(k=0,1,\dotsc\).
 
 Then, by plotting \(\displaystyle k\cdot
 \frac{\widehat{p}_k}{\widehat{p}_{k-1}}\) against \(k\) (or other means), we
 can examine whether a linear relationship is plausible. If such linear
 relationship is deemed plausible, we can then use some line fitting technique
 to obtain estimated value of \(a\) and \(b\).
-\end{note}
 \end{enumerate}
 \subsection{The \((a,b,1)\) Class}
 \begin{enumerate}
@@ -117,17 +114,16 @@ especially when the insurance covers some ``rare'' loss, the probability
 \(p_0\) is often quite large.
 
 \item To deal with this issue, a simple way is to add a flexibility on the
-choice of \(p_0\) on distribution in the \((a,b,0)\) class \faIcon{arrow-right}
-resulting in the \emph{\((a,b,1)\) class}.
+choice of \(p_0\) on distribution in the \((a,b,0)\) class, which gives rise to
+the \emph{\((a,b,1)\) class}.
 
 \item Let \(N\) be a nonnegative discrete random variable with pmf
 \(p_k=\prob{N=k}\). Then, (the distribution of) \(N\) is in the \defn{\((a,b,1)\)
 class} if there exist constants \(a\) and \(b\) such that
 \[
-\frac{p_k}{p_{k-1}}=a+\frac{b}{k}\quad\text{for any \(k\ge {\color{magenta}2}\)},
+p_k=\qty(a+\frac{b}{k})p_{k-1}\quad\text{for any \(k=\mgc{2},3,\dotsc\)},
 \]
-while \(p_0\) can take any value (as long as none of the probability axioms is
-violated).
+while \(p_0\) can take any value in \([0,1]\).
 
 \begin{note}
 The relationship above starts with the pair \(p_{\color{violet} 1}\) and
@@ -135,41 +131,33 @@ The relationship above starts with the pair \(p_{\color{violet} 1}\) and
 \end{note}
 
 \item Like the \((a,b,0)\) class, all the probabilities \(p_0,p_1,\dotsc\) are
-fixed after \(a\), \(b\), and \(p_0\) are fixed.
-
-Hence, the values of \(a\), \(b\), and \(p_0\) can be used to uniquely
-characterize a distribution (provided that it is in the \((a,b,1)\) class).
+fixed after \(a\), \(b\), and \(p_0\) are fixed. Hence, the values of \(a\),
+\(b\), and \(p_0\) can be used to uniquely characterize a distribution in the
+\((a,b,1)\) class.
 \end{enumerate}
 \subsection{The Zero-Modified and Zero-Truncated \((a,b,1)\) Classes}
 \begin{enumerate}
-\item Another way to make distribution in the \((a,b,0)\) class better model
-the number of claims \(N\) is to apply \emph{zero-modification} to the
-distribution, which yields a distribution in the \emph{zero-modified
-\((a,b,1)\) class}.
-\item \label{it:zero-modify-process}
-More specifically, the \defn{zero-modification} process is as follows.
-\begin{enumerate}
-\item Pick any distribution in the \((a,b,0)\) class. Then, we know
-\[
-\frac{p_k}{p_{k-1}}=a+\frac{b}{k}\quad\text{for any \(k\ge 1\)}.
-\]
-\item Modify \(p_0\) to an arbitrary number \(p_0^{M}\in(0,1)\) (we exclude 0
-and 1 to avoid making the distribution degenerate).
-\item Modify the probabilities (in the support) \(p_1\), \(p_2\), \(\dotsc\) to
-\(p_1^M=cp_1\), \(p_2^M=cp_2\),\(\dotsc\) respectively, for some constant
-\(c\).
+\item \label{it:zero-modify-process} One systematic method for creating a
+distribution in the \((a,b,1)\) class is \defn{zero-modification}:
+\begin{enumerate}[label={(\arabic*)}]
+\item Pick any distribution of a nonnegative discrete random variable (usually
+in the \((a,b,0)\) class).
+\item Modify \(p_0\) to an arbitrary number \(p_0^{M}\in [0,1]\).
+\item Modify the probabilities \(p_1\), \(p_2\), \(\dotsc\) to \(p_1^M=cp_1\),
+\(p_2^M=cp_2\),\(\dotsc\) respectively, for some constant \(c\), such that the
+resulting probabilities \(p_0^{M},p_1^{M},\dotsc\) form a valid distribution.
 \end{enumerate}
 Then, \(p_0^M,p_1^M,\dotsc\) form a distribution in the \defn{zero-modified
 \((a,b,1)\) class}.
 
-\begin{note}
-For any \(k\ge 2\), we have
+In the case where we start with a distribution in the \((a,b,0)\) class, for
+any \(k=2,3,\dotsc\), we have
 \[
-\frac{p_k^M}{p_{k-1}^M}=\frac{cp_k}{cp_{k-1}}=\frac{p_k}{p_{k-1}}=a+\frac{b}{k}.
+p_k^{M}=cp_k=c\qty(a+\frac{b}{k})p_{k-1}
+=\qty(a+\frac{b}{k})p_{k-1}^{M}.
 \]
 Hence, a distribution in the zero-modified \((a,b,1)\) class is also in the
 \((a,b,1)\) class.
-\end{note}
 \item \label{it:zm-const-c-fmla}
 The constant \(c\) in \labelcref{it:zero-modify-process} is indeed
 uniquely determined, due to the constraint that \(p_0^M+p_1^M+\dotsb=1\):
@@ -183,9 +171,9 @@ p_0^M+c(1-p_0)=1
 c=\boxed{\frac{1-p_0^M}{1-p_0}}.
 \]
 \item \label{it:zm-kth-moment}
-Let \(N\) be a random variable in the \((a,b,1)\) class, and let \(N^M\) be
+Let \(N\) be a random variable in the \((a,b,0)\) class, and let \(N^M\) be
 the random variable in the zero-modified \((a,b,1)\) class obtained by applying
-zero-modification on the distribution of \(N\). Then, for any \(k\ge 1\), the
+zero-modification on the distribution of \(N\). Then, for any \(k=1,2,\dotsc\), the
 \(k\)th moment of \(N^M\) is
 \[
 \expv{\qty(N^M)^{k}}=\sum_{j=1}^{\infty}j^kp_j^M 
@@ -193,30 +181,44 @@ zero-modification on the distribution of \(N\). Then, for any \(k\ge 1\), the
 ={\color{violet}c}\sum_{j=1}^{\infty}j^k p_j
 =\boxed{c\expv{N^k}}
 \]
-where \(\displaystyle c=\frac{1-p_0^M}{1-p_0}=\frac{1-\prob{M=0}}{1-\prob{N=0}}\).
+where \(\displaystyle c=\frac{1-p_0^M}{1-p_0}=\frac{1-\prob{N^M=0}}{1-\prob{N=0}}\).
+
+\begin{warning}
+We do \underline{not} have \(\vari{N^M}=c\vari{N}\)!
+\end{warning}
 
 \item \label{it:zm-pgf-fmlas}
-Consider the same setting as \labelcref{it:zm-kth-moment}. Then, the pgf
-of \(N^M\) is
+Consider the same setting as \labelcref{it:zm-kth-moment}. The pgf of \(N^M\)
+is
  \[
-P_{N^M}(t)=p_0^M+tp_1^M+t^2p_2^M
+P_{N^M}(t)=p_0^M+tp_1^M+t^2p_2^M+\dotsb
 =p_0^M+c(tp_1+t^2p_2+\dotsb)
 =\boxed{p_0^M+c(P_N(t)-p_0)}
 \]
 where \(P_N(t)\) is the pgf of \(N\).
 
-We can further write
+\begin{intuition}
+The final expression \(\boxed{\mgc{p_0^M+}\gc{c(}P_N(t)\vc{-p_0}\gc{)}}\) corresponds to the
+``actions'' taken on the pgf during the zero modification:
+\begin{enumerate}[label={(\arabic*)}]
+\item \(\vc{-p_0}\): ``take away'' the original \(p_0\) from the initial pgf
+\item \(\gc{c(\cdot)}\): scale \(p_1,p_2,\dotsc\) by \(c\)
+\item \(\mgc{p_0^M+}\): ``add back'' the modified probability \(p_0^M\)
+\end{enumerate}
+\end{intuition}
+
+We can also rewrite the expression as follows:
 \[
 p_0^M+c(P_N(t)-p_0)
 =\underbrace{p_0^M-cp_0}_{1-c}+cP_N(t)
-=\boxed{1-c+cP_N(t)}
+=\boxed{1-c+cP_N(t)},
 \]
 which only involves \(c\) and \(P_N(t)\).
 
 \item If we modify \(p_0\) to \(p_0^M=0\) in the zero modification process, we
 call the process as \defn{zero-truncation}, and the resulting distribution is
 in the \defn{zero-truncated \((a,b,1)\) class}. Furthermore, we usually denote
-\(p_k^M\) by \(p_k^T\) instead for any \(k\ge 0\).
+\(p_k^M\) by \(p_k^T\) instead for any \(k=0,1,\dotsc\).
 
 \item \label{it:zt-fmlas}
 Since zero-truncated \((a,b,1)\) class is essentially a special case of
@@ -224,10 +226,10 @@ zero-modified \((a,b,1)\) class, previous formulas in
 \labelcref{it:zm-const-c-fmla,it:zm-kth-moment,it:zm-pgf-fmlas} also apply, by
 setting \(p_0^M=0\). Particularly:
 \begin{itemize}
-\item \(\displaystyle c=\frac{1}{1-p_0}\) (where \(p_k^T=cp_k\) for any \(k\ge 1\)).
+\item \(\displaystyle c=\frac{1}{1-p_0}\), and \(p_k^T=cp_k\) for any \(k=1,2,\dotsc\).
 \item The pgf of \(N^T\) (obtained by zero-truncating \(N\)) is
 \[
-P_{N^T}(t)=(1-c)+cP_N(t)=\qty(1-\frac{1}{1-p_0})+\frac{1}{1-p_0}P_N(t),
+P_{N^T}(t)=1-c+cP_N(t)=\qty(1-\frac{1}{1-p_0})+\frac{1}{1-p_0}P_N(t),
 \]
 which only involves \(p_0\) and \(P_N(t)\).
 \end{itemize}
@@ -236,19 +238,21 @@ which only involves \(p_0\) and \(P_N(t)\).
 \begin{enumerate}
 \item In this section we consider a special way to modify a \emph{negative
 binomial distribution} which involves \emph{extension} and \emph{truncation}.
+This allows us to create a distribution in the \((a,b,1)\) class that
+\emph{cannot} be obtained by zero-modification.
 
 \item To motivate this way of modification, consider a random variable
 \(N\sim\nb{r,\beta}\). Its pmf is given by
 \[
 p_k=\prob{N=k}=\binom{k+r-1}{k}\qty(\frac{1}{1+\beta})^{r}\qty(\frac{\beta}{1+\beta})^{k}
 \]
-for any \(k\in\N_0\). Recall that the constraints on the parameters are \(r>0\)
+for any \(k=0,1,\dotsc\). Recall that the constraints on the parameters are \(r>0\)
 and \(\beta>0\).
 
-Now, suppose we (improperly) set \(r\in(-1,0)\) (while \(\beta>0\) still). A
+Now, suppose we improperly set \(r\in(-1,0)\), while \(\beta>0\) still. A
 consequence is that
 \[
-p_0=(1+\beta)^{-r}>1\qqtext{and}p_k<0\text{ for any \(k\in\N\)},
+p_0=(1+\beta)^{-r}>1\qqtext{and}p_k<0\text{ for any \(k=1,2,\dotsc\)},
 \]
 violating the probability axioms.
 
@@ -256,7 +260,7 @@ violating the probability axioms.
 still holds, and the recursive relation for the \((a,b,0)\) class is still
 satisfied:
 \[
-p_k=\qty(a+\frac{b}{k})p_{k-1}\quad\text{for any \(k\in\N\)},
+p_k=\qty(a+\frac{b}{k})p_{k-1}\quad\text{for any \(k=1,2,\dotsc\)},
 \]
 where \(\displaystyle a=\frac{\beta}{1+\beta}\) and \(\displaystyle
 b=(r-1)\frac{\beta}{1+\beta}\) (same as \labelcref{it:nb-ab0}). 
@@ -271,14 +275,14 @@ probability axioms.
 (``\emph{extended}''). We perform zero-truncation on \(N\sim\nb{r,\beta}\)
 (where \(r\in(-1,0)\) and \(\beta>0\)), which gives
 \[
-p_0^T=0\qqtext{and}p_k^T=cp_k\quad\text{for any \(k\in\N\)}
+p_0^T=0\qqtext{and}p_k^T=cp_k\quad\text{for any \(k=1,2,\dotsc\)}
 \]
-where \(\displaystyle c=\frac{1}{1-p_0}<0\) (as \(p_0>1\)).
+where \(\displaystyle c=\frac{1}{1-p_0}<0\) as \(p_0>1\).
 
 \begin{note}
 By construction of zero-truncation, we always have
 \(p_0^T+p_1^T+p_2^T+\dots+=1\). Furthermore, \(p_k^T\) is nonnegative for any
-\(k\in\N_0\) (since \(p_k<0\) for any \(k\in\N\) and \(c<0\)). Thus, the
+\(k=0,1,\dotsc\), since \(p_k<0\) for any \(k=1,2,\dotsc\) and \(c<0\). Thus, the
 probability axioms are not violated.
 \end{note}
 
@@ -290,7 +294,7 @@ Then, the probabilities \(p_0^T,p_1^T,\dotsc\) form the
 previous results for this class apply. Particularly, we have the following
 recursive formula for the \((a,b,1)\) class:
 \[
-p_k^T=\qty(a+\frac{b}{k})p_{k-1}^{T}\quad\text{for any \(k\ge 2\)}
+p_k^T=\qty(a+\frac{b}{k})p_{k-1}^{T}\quad\text{for any \(k=2,3,\dotsc\)}
 \]
 where \(\displaystyle a=\frac{\beta}{1+\beta}\) and \(\displaystyle
 b=(r-1)\frac{\beta}{1+\beta}\) (same as \labelcref{it:nb-ab0}). 
@@ -302,24 +306,20 @@ where \(r\in(-1,0)\) and \(\beta>0\), we carry out the following steps:
 \item Treat it as if it were an ordinary \(\nb{r,\beta}\) distribution and use
 the pmf formula to compute
 \[
-p_k=\binom{k+r-1}{k}\qty(\frac{\beta}{1+\beta})^{k}\qty(\frac{1}{1+\beta})^{r}
+p_k=\binom{r+k-1}{k}\qty(\frac{1}{1+\beta})^{r}\qty(\frac{\beta}{1+\beta})^{k}
 \]
-for all \(k\) needed (possibly depending on the method chosen in the second
-step below).  Particularly:
-\begin{itemize}
-\item \(\displaystyle p_0=\qty(\frac{1}{1+\beta})^{r}>1\).
-\item \(\displaystyle p_1=r\qty(\frac{1}{1+\beta})^{r}\qty(\frac{\beta}{1+\beta})<0\).
-\end{itemize}
+for all \(k\) needed, depending on the method chosen in the second step below.
+
 \item The desired \(\etnb{r,\beta}\) probabilities can then be obtained by one
 of the following methods.
 \begin{enumerate}
 \item Directly use the following:
 \[
-p_0^T=0\qqtext{and}p_k^T=cp_k\quad\text{for any \(k\in\N\)}
+p_0^T=0\qqtext{and}p_k^T=cp_k\quad\text{for any \(k=1,2,\dotsc\)}
 \]
 where \(\displaystyle c=\frac{1}{1-p_0}\).
 \item First compute \(p_1^T=cp_1\), and then use the following recursive
-formula:
+formula to compute the rest of the probabilities needed:
 \[
 p_k^T=\qty(a+\frac{b}{k})p_{k-1}^{T}\quad\text{for any \(k=2,3,\dotsc\)}
 \]

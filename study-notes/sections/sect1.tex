@@ -11,7 +11,7 @@ variable.  (Some of them are discussed in STAT2901.)
 
 \begin{note}
 The 1st raw moment of a random variable \(X\) is the \emph{mean} of \(X\), and
-is denoted by \(\mu\).
+is commonly denoted by \(\mu\).
 \end{note}
 \item The \defn{\(k\)th central moment} of \(X\), denoted by \(\mu_k\), is \(\expv{(X-\mu)^k}\).
 \item Some quantities of interest related to central moment are as follows.
@@ -40,6 +40,7 @@ symmetric!
 {\color{ForestGreen}Positive} ({\color{red}negative}) skewness indicates
 that the {\color{ForestGreen}right} ({\color{red}left}) tail is \emph{longer}
 and the mass of distribution is concentrated on the left (right).
+
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[domain=-7:7, samples=100, axis lines=middle, xtick=\empty, ytick=\empty, ymin=-0.1, ymax=0.7,
@@ -49,17 +50,17 @@ legend entries={positive skewness, negative skewness}, legend style={legend pos=
 \end{axis}
 \end{tikzpicture}
 \end{center}
+
 \begin{intuition}
-Skewness can be written as 
-\(\expv{(X-\mu)/\sigma^{3}}\). Since the term inside is raised to
-power 3, long right (left) tail contributes very positively (negatively) to
-skewness value.
+Skewness can be written as \(\expv{(X-\mu)/\sigma^{3}}\). Since the term inside
+is raised to power 3, long right (left) tail contributes very positively
+(negatively) to skewness value.
 \end{intuition}
 \item \emph{Kurtosis}: It measures ``flatness'' of the distribution relative to
-a \emph{normal distribution} (which has a kurtosis of 3). When kurtosis is
-above (below) 3, it is ``flatter'' (``less flat'') than normal distribution.
-(Keeping standard deviation constant, more mass of distribution is located away
-from mean, relative to a normal distribution.)
+a \emph{normal distribution}, which has a kurtosis of 3. When kurtosis is
+above (below) 3, it is ``flatter'' (``less flat'') than normal distribution, in
+the sense that more mass of distribution is located away from mean relative to
+a normal distribution, keeping standard deviation constant.
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[domain=-2:2, samples=100, axis lines=middle, xtick=\empty, ytick=\empty, 
@@ -89,7 +90,6 @@ Let \(X\) be a nonnegative random variable with finite mean (i.e.,
 \expv{X}=\int_{0}^{\infty}S_X(t)\dd{t}.
 \]
 \end{proposition}
-\begin{center}
 \begin{tikzpicture}
 \begin{axis}[domain=0:3, axis lines=middle,
 ymax=1.1,
@@ -105,7 +105,6 @@ ylabel style={anchor=south}]
 node[pos=-0.1]{area = \(\expv{X}\)};
 \end{axis}
 \end{tikzpicture}
-
 \begin{tikzpicture}
 \begin{axis}[domain=0:3, axis lines=middle,
 ymax=1.1,
@@ -121,33 +120,26 @@ ylabel style={anchor=south}]
 node[pos=-0.1]{area = \(\expv{X}\)};
 \end{axis}
 \end{tikzpicture}
-\end{center}
 
 \begin{pf}
 Since \(X\ge 0\), we have
 \[
-X=\int_{0}^{X}1\dd{t}=\int_{0}^{\infty}\indicset{t<X}\dd{t}
+X=\int_{0}^{X}1\dd{t}=\int_{0}^{\infty}\indicset{t<X}\dd{t}\footnote{\(\indicset{\cdot}\) denotes the indicator function.}
 \]
-\begin{note}
-\(\indicset{\cdot}\) denotes the indicator function.
-\end{note}
-
 Thus,
 \[
 \expv{X}=\expv{\int_{0}^{\infty}\indicset{t<X}\dd{t}}
 =\int_{0}^{\infty}\expv{\indicset{X>t}}\dd{t}
-=\int_{0}^{\infty}\prob{X>t}\dd{t}
+=\int_{0}^{\infty}\prob{X>t}\dd{t}.
 \]
-where the second equality holds by Fubini's theorem.
 \end{pf}
 
 \begin{remark}
 \item This result holds no matter \(X\) is discrete or continuous.
 \item This result suggests a geometrical interpretation of mean of
-(nonnegative) \(X\): area under graph of \(S_X\) or area between the graph of
-\(y=F_X(t)\) and the line \(y=1\). This still holds when \(X\) is discrete!
+(nonnegative) \(X\): area under the graph of \(S_X\) or area between the graph
+of \(y=F_X(t)\) and the line \(y=1\). This still holds when \(X\) is discrete!
 
-\begin{center}
 \begin{tikzpicture}
 \begin{axis}[domain=0:5, axis lines=middle,
 xmin=-0.1, ymax=1.1,
@@ -178,7 +170,6 @@ ylabel style={anchor=south}]
 node[pos=-0.1]{area = \(\expv{X}\)};
 \end{axis}
 \end{tikzpicture}
-
 \begin{tikzpicture}
 \begin{axis}[domain=0:5, axis lines=middle,
 xmin=-0.1, ymax=1.1, ymin=-0.1,
@@ -209,7 +200,6 @@ ylabel style={anchor=south}]
 node[pos=-0.1]{area = \(\expv{X}\)};
 \end{axis}
 \end{tikzpicture}
-\end{center}
 \end{remark}
 
 \item As a corollary, we have the following the result for \emph{discrete}
@@ -266,7 +256,7 @@ By summing up the areas of the rectangles, the area under \(S_X\) is
 \end{enumerate}
 \subsection{Stop Loss Variables}
 \begin{enumerate}
-\item Fix any real number \(d\) and consider a loss \faIcon{fire-alt} random
+\item Fix any real number \(d\), and consider a loss \faIcon{fire-alt} random
 variable \(X\) (positive value \faIcon{arrows-alt-h} positive loss).  Then, the
 \defn{stop loss variable} is 
 \[
@@ -275,13 +265,13 @@ X-d&\text{if }X> d;\\
 0&\text{if }X\le d
 \end{cases}
 \]
-(where \(x_{+}=\max\{x,0\}=x\vee 0\) is the \defn{positive part} of \(x\)).
+where \(x_{+}=\max\{x,0\}\) is the \defn{positive part} of \(x\).
 
 \item For a practical interpretation of stop loss variable, consider the
 following. Suppose that the insurer \faIcon{building} insures a loss \(X\) with
-a \defn{deductible} of \(d\) dollars (i.e., the policyholder \faIcon{user}
+a \defn{deductible} of \(d\) dollars, i.e., the policyholder \faIcon{user}
 suffering the loss \(X\) is responsible for first \(d\) dollars of loss, and
-\faIcon{building} insures the remaining portion (if exist)). Then, the stop
+\faIcon{building} insures the remaining portion (if exists). Then, the stop
 loss variable represents the payment made by \faIcon{building}:
 \begin{itemize}
 \item If the loss \(X\le d\), then there is no payment.
@@ -290,60 +280,20 @@ loss variable represents the payment made by \faIcon{building}:
 \begin{note}
 By having such insurance (called \defn{stop-loss insurance}), the policyholder
 \faIcon{user} suffers \emph{at most} \(d\) dollars of loss, so the insurance
-``stops'' the loss suffered by \faIcon{user} (from \(d\) dollars onwards)
-\faIcon{arrow-right} hence ``stop loss''.
+``stops'' the loss suffered by \faIcon{user} from \(d\) dollars onwards, hence
+``stop loss''.
 \end{note}
 
-\item \label{it:stop-loss-direct-exp-fmlas}
-If \(X\) is continuous with pdf \(f_X\), then
-\[
-\expv{(X-d)_{+}}=\int_{-\infty}^{\infty}(x-d)_{+}f_X(x)\dd{x}
-=\int_{-\infty}^{d}0\dd{x}+\int_{d}^{\infty}(x-d)f_X(x)\dd{x}
-=\boxed{\int_{d}^{\infty}(x-d)f_X(x)\dd{x}}.
-\]
-On the other hand, if \(X\) is discrete, then
-\[
-\expv{(X-d)_{+}}=\sum_{j}^{}(x_j-d)_{+}\prob{X=x_j}
-=\boxed{\sum_{x_j>d}^{}(x_j-d)\cdot p_j}.
-\]
-where \(p_j=\prob{X=x_j}\) and the sum is taken over all \(j\) where \(p_j>0\)
-(with \(x_j>d\) for the second sum).
-
 \item We have the following result for the stop loss variable, which is
-similar to \cref{prp:mean-surv}.
+similar to \Cref{prp:mean-surv}.
 \begin{proposition}
 \label{prp:mean-sl-surv}
-Let \(X\) be a (nonnegative or not) random variable with finite mean and let
-\(S_X(x)\) be its survival function. Then, for any \(d\in\R\),
+Let \(X\) be a random variable with finite mean and let \(S_X(x)\) be its
+survival function. Then, for any \(d\in\R\),
 \[
 \expv{(X-d)_{+}}=\int_{d}^{\infty}S_X(x)\dd{x}.
 \]
 \end{proposition}
-\begin{pf}
-Since \((X-d)_{+}\ge 0\) (with finite mean also), by \cref{prp:mean-surv} we have
-\[
-\expv{(X-d)_{+}}=\int_{0}^{\infty}\prob{(X-d)_{+}>t}\dd{t}
-=\int_{0}^{\infty}\prob{X>d+t}\dd{t}
-\overset{x=t+d}{=}\int_{d}^{\infty}S_X(x)\dd{x}
-\]
-where the second equality holds as \((X-d)_{+}>t\iff X>d+t\) for any \(t\ge 0\).
-\begin{center}
-\begin{tikzpicture}[
-declare function={sl(\x)=(\x<=2)*0+(\x>2)*(\x-2);}
-]
-\begin{axis}[domain=0:5,
-axis lines=middle, samples=100, xtick={2,3}, xticklabels={\(d\), \(d+t\)}, ytick={1},
-yticklabel={\(t\)},
-xmin=-0.5, ymin=-0.5, xlabel=\(X\), ylabel=\((X-d)_{+}\)]
-\addplot[blue]{sl(x)};
-\draw[yellow, opacity=0.5, line width=0.2cm, line cap=round] (3.1,1.1) -- (4.9,2.9);
-\draw[yellow, opacity=0.5, line width=0.2cm] (0,1.01) -- (0,2.9);
-\draw[yellow, opacity=0.5, line width=0.2cm] (3.01,0) -- (4.9,0);
-\end{axis}
-\end{tikzpicture}
-\end{center}
-\end{pf}
-\begin{center}
 \begin{tikzpicture}
 \begin{axis}[domain=0:3, axis lines=middle,
 ymax=1.1,
@@ -374,7 +324,48 @@ ylabel style={anchor=south}]
 node[pos=-0.2]{area = \(\expv{(X-d)_{+}}\)};
 \end{axis}
 \end{tikzpicture}
+\begin{pf}
+Since \((X-d)_{+}\ge 0\), by \Cref{prp:mean-surv} we have
+\[
+\expv{(X-d)_{+}}=\int_{0}^{\infty}\prob{(X-d)_{+}>t}\dd{t}
+=\int_{0}^{\infty}\prob{X>d+t}\dd{t}
+\overset{x=t+d}{=}\int_{d}^{\infty}S_X(x)\dd{x}
+\]
+where the second equality holds as \((X-d)_{+}>t\iff X>d+t\) for any \(t\ge 0\).
+\begin{center}
+\begin{tikzpicture}[
+declare function={sl(\x)=(\x<=2)*0+(\x>2)*(\x-2);}
+]
+\begin{axis}[domain=0:5,
+axis lines=middle, samples=100, xtick={2,3}, xticklabels={\(d\), \(d+t\)}, ytick={1},
+yticklabel={\(t\)},
+xmin=-0.5, ymin=-0.5, xlabel=\(X\), ylabel=\((X-d)_{+}\)]
+\addplot[blue]{sl(x)};
+\draw[yellow, opacity=0.5, line width=0.2cm, line cap=round] (3.1,1.1) -- (4.9,2.9);
+\draw[yellow, opacity=0.5, line width=0.2cm] (0,1.01) -- (0,2.9);
+\draw[yellow, opacity=0.5, line width=0.2cm] (3.01,0) -- (4.9,0);
+\end{axis}
+\end{tikzpicture}
 \end{center}
+\end{pf}
+
+
+\item Alternatively, one can compute the expectation by definition. However,
+\Cref{prp:mean-sl-surv} is often more handy.
+
+If \(X\) is continuous with pdf \(f_X\), then
+\[
+\expv{(X-d)_{+}}=\int_{-\infty}^{\infty}(x-d)_{+}f_X(x)\dd{x}
+=\int_{-\infty}^{d}0\dd{x}+\int_{d}^{\infty}(x-d)f_X(x)\dd{x}
+=\boxed{\int_{d}^{\infty}(x-d)f_X(x)\dd{x}}.
+\]
+On the other hand, if \(X\) is discrete, then
+\[
+\expv{(X-d)_{+}}=\sum_{j}^{}(x_j-d)_{+}\prob{X=x_j}
+=\boxed{\sum_{x_j>d}^{}(x_j-d)\cdot p_j}.
+\]
+where \(p_j=\prob{X=x_j}\).
+
 \end{enumerate}
 \subsection{Excess Loss Variables}
 \begin{enumerate}
@@ -405,12 +396,13 @@ perspective. When \(X>d\), then there is no difference from the stop loss
 variable: The payment is of amount \(X-d\).
 
 However, when \(X\le d\), since in practice the policyholder \faIcon{user}
-\emph{would not even report the loss to \faIcon{building}} (as \faIcon{user}
-needs to bear the full responsibility of it anyway). Hence, such losses are
-\emph{not found} in \faIcon{building}'s record (database \faIcon{database},
-spreadsheet \faIcon{file-excel}, etc.) \faIcon{arrow-right} they \emph{do not
-exist} from \faIcon{building}'s perspective \faIcon{arrow-right} ``undefined''
-payment amount.
+\emph{would not even report the loss to \faIcon{building}}, as \faIcon{user}
+needs to bear the full responsibility of it anyway.
+
+Hence, such losses are \emph{not found} in \faIcon{building}'s record (database
+\faIcon{database}, spreadsheet \faIcon{file-excel}, etc.), meaning that
+they \emph{do not exist} from \faIcon{building}'s perspective. Thus, we have an
+``undefined'' payment amount.
 
 \item We are usually interested in studying the \emph{expected value} of the
 excess loss variable, which is called the \defn{mean excess loss function} (or
@@ -422,32 +414,7 @@ e_{X}(d)=\expv{Y}=\expv{X-d|X>d}.
 \begin{note}
 In life contingencies, the actuarial notation is \(\eringx{d}\).
 \end{note}
-\item \label{it:mrl-fmlas}
-If \(X\) is continuous with pdf \(f_X\), then
-\[
-e_X(d)=\frac{\expv{(X-d)\indicset{X>d}}}{\prob{X>d}}
-=\boxed{\frac{\displaystyle\int_{d}^{\infty}(x-d)f_X(x)\dd{x}}{\prob{X>d}}}.
-\]
-If \(X\) is discrete, then
-\[
-e_X(d)=\boxed{\frac{\displaystyle \sum_{x_j>d}^{}(x_j-d)p_j}{\prob{X>d}}}
-\]
-where \(p_j=\prob{X=x_j}\).
 
-\item \label{it:ex-loss-kth-moment-fmlas}
-To compute the \(k\)th moment of the excess loss variable \(Y\) (i.e.,
-\(\expv{Y^k}\)) (denoted by \(e_X^{k}(d)\)), we can use the following formulas.
-\begin{itemize}
-\item \(X\) is continuous with pdf \(f_X\):
-\[
-e_X^{k}(d)=\boxed{\frac{\displaystyle \int_{d}^{\infty}(x-d)^kf_X(x)\dd{x}}{\prob{X>d}}}.
-\]
-\item \(X\) is discrete:
-\[
-e_X^{k}(d)=\boxed{\frac{\displaystyle \sum_{x_j>d}^{}(x_j-d)^{k}p_j}{\prob{X>d}}}
-\]
-where \(p_j=\prob{X=x_j}\).
-\end{itemize}
 \item \label{it:mrl-exp-sl-relation}
 The MRL \(e_X(d)\) and the expected stop loss variable \(\expv{(X-d)_{+}}\) can
 be related as follows.
@@ -457,7 +424,7 @@ e_X(d)=\frac{\expv{(X-d)\indicset{X>d}}}{\prob{X>d}}
 =\boxed{\frac{\expv{(X-d)_{+}}}{\prob{X>d}}}.
 \]
 \begin{note}
-Using \cref{prp:mean-sl-surv}, we can further write
+Using \Cref{prp:mean-sl-surv}, we can further write
 \[
 e_X(d)=\boxed{\frac{\displaystyle \int_{d}^{\infty}S_X(x)\dd{x}}{\prob{X>d}}}.
 \]
@@ -470,14 +437,14 @@ e_X(d)=\boxed{\frac{\displaystyle \int_{d}^{\infty}S_X(x)\dd{x}}{\prob{X>d}}}.
 \[
 X\wedge u=\min\{X,u\}=
 \begin{cases}
-X&\text{if }X\le u.\\
-u&\text{if }X>u;\\
+X&\text{if }X\le u;\\
+u&\text{if }X>u.\\
 \end{cases}
 \]
 \item For a practical interpretation of limited loss variable, consider the
 following. Suppose that the insurer \faIcon{building} insures a loss \(X\)
-with a policy limit of \(u\) dollars (i.e., the maximum loss insured is \(u\)
-dollars). Then, the limited loss variable represents the payment made by
+with a policy limit of \(u\) dollars, i.e., the maximum loss insured is \(u\)
+dollars. Then, the limited loss variable represents the payment made by
 \faIcon{building}:
 \begin{itemize}
 \item If the loss \(X\le u\), then \faIcon{building} pays the full amount \(u\) to
@@ -486,29 +453,9 @@ the policyholder \faIcon{user}.
 \end{itemize}
 There is a cap of \(u\) dollars to the payment made by \faIcon{building}.
 
-\item \label{it:lim-loss-kth-moment-fmlas}
-To compute the \(k\)th moment of the limited loss variable \(X\wedge u\),
-we can use the following formulas.
-\begin{itemize}
-\item \(X\) is continuous with pdf \(f_X\):
-\[
-\expv{(X\wedge u)^{k}}=\int_{-\infty}^{\infty}(x\wedge u)^{k}f_X(x)\dd{x}
-=\int_{-\infty}^{u}x^kf_X(x)\dd{x}
-+\int_{u}^{\infty}u^kf_X(x)\dd{x}
-=\boxed{\int_{-\infty}^{u}x^kf_X(x)\dd{x}+u^k\prob{X>u}}.
-\]
-\item \(X\) is discrete:
-\[
-\expv{(X\wedge u)^{k}}
-=\sum_{j}^{}(x_j\wedge u)^k p_j
-=\sum_{x_j\le u}^{}x_j^kp_j+\sum_{x_j>u}^{}u^kp_j
-=\boxed{\sum_{x_j\le u}^{}x^kp_j+u^k\prob{X>u}}
-\]
-where \(p_j=\prob{X=x_j}\).
-\end{itemize}
 \item \label{it:sl-limloss-relation}
-Stop loss and limited loss variables can be related as follows. For any
-\(d\in\R\) and any random variable \(X\),
+An important relationship between stop loss and limited loss variables is as
+follows. For any \(d\in\R\) and any random variable \(X\),
 \[
 (X-d)_{+}+(X\wedge d)=X.
 \]
@@ -542,19 +489,23 @@ xmin=-0.5, ymin=-0.5, xlabel=\(X\) ,legend entries={\((X-d)_{+}\), \(X\wedge d\)
 \end{center}
 \end{pf}
 
-\begin{note}
-A practical interpretation of this result is that combining an insurance with
+\begin{remark}
+\item A practical interpretation of this result is that combining an insurance with
 deductible \(d\) and another insurance with policy limit \(d\) gives an
 insurance with full coverage.
-\end{note}
+\item We can also show that \((d-X)_{+}+(d\wedge X)=d\) using a similar proof.
+This provides a helpful way to find probabilistic quantities about the
+``swapped'' stop-loss variable \((d-X)_{+}\).
+\end{remark}
+
 \item Due to the relationship in \labelcref{it:sl-limloss-relation}, we can
-obtain the following formula for computing expected limited loss (assuming
-\(X\) has finite mean and is nonnegative), using
-\cref{prp:mean-surv,prp:mean-sl-surv}:
+obtain the following formula for computing expected limited loss, using
+\Cref{prp:mean-surv,prp:mean-sl-surv}, assuming \(X\) has finite mean and is
+nonnegative:
 \[
 \expv{X\wedge u}=\expv{X}-\expv{(X-u)_{+}}
 =\int_{0}^{\infty}S_X(x)\dd{x}-\int_{u}^{\infty}S_x(x)\dd{x}
-=\boxed{\int_{0}^{u}S_X(x)\dd{x}}.
+=\boxed{\int_{0}^{u}S_X(x)\dd{x}}
 \]
 where \(S_X\) is the survival function of \(X\).
 \end{enumerate}
@@ -638,16 +589,16 @@ Suppose that \(X\) is a nonnegative random variable. Fix any \(r,k>0\) with
 \[
 \expv{X^k}<\infty\implies \expv{X^r}<\infty.
 \]
-(So, existence of \(k\)th moment implies existence of
-all smaller positive moments.)
+That is, existence of \(k\)th moment implies existence of
+all smaller positive moments.
 
 \begin{note}
 Equivalently,
 \[
 \expv{X^r}=\infty\implies \expv{X^k}=\infty.
 \]
-(So, non-existence of \(r\)th moment implies non-existence of
-all larger positive moments.)
+That is, non-existence of \(r\)th moment implies non-existence of
+all larger positive moments.
 \end{note}
 \end{proposition}
 \begin{pf}

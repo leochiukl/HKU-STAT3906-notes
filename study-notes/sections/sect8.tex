@@ -21,7 +21,7 @@ risk.
 
 \begin{note}
 This interpretation is more natural if the function \(\rho\) satisfies certain
-properties, which will be discussed in \cref{subsect:coherent-risk-measures}.
+properties, which will be discussed in \Cref{subsect:coherent-risk-measures}.
 However, these properties are not \emph{required} in the definition.
 \end{note}
 \end{enumerate}
@@ -29,8 +29,8 @@ However, these properties are not \emph{required} in the definition.
 \begin{enumerate}
 \item The first use of risk measures in actuarial science was the development
 of \emph{premium principles} (e.g., equivalence principle in STAT3901). The
-premium principles are applied to a loss distribution (distribution of loss
-\(X\)) for determining a suitable premium to charge for insuring the loss
+premium principles are applied to the distribution of loss
+\(X\) for determining a suitable premium to charge for insuring the loss
 \(X\).
 
 \item Some examples of premium principles expressed in the language of risk
@@ -75,7 +75,12 @@ The \defn{value-at-risk at confidence level \(\alpha\)} (or
 \vatr{\alpha}{X}=\min\{x\ge 0:F_X(x)\ge \alpha\}
 \]
 where \(F_X\) is the cdf of \(X\).
-\begin{center}
+
+The following plots illustrate how to find the value-at-risk graphically in two
+cases: (i) the line \(y=\alpha\) intersects with the cdf at infinitely many
+points and (ii) the line \(y=\alpha\) intersects with the cdf at exactly one
+point.
+
 \begin{tikzpicture}
 \begin{axis}[domain=0:5, axis lines=middle, samples=100,
 ymax=3.5,
@@ -88,6 +93,7 @@ ylabel style={anchor=south},
 \addplot[blue, domain=0:3]{x^(1/2)};
 \addplot[blue, domain=3:4]{3^(1/2)};
 \addplot[blue, domain=4:5]{x-(4-3^(1/2))};
+\addplot[violet, dashed, domain=0:5]{3^(1/2)};
 \draw[yellow, opacity=0.5, line width=0.2cm] (3,\fpeval{3^(1/2)}) -- (4,\fpeval{3^(1/2)});
 \draw[yellow, opacity=0.5, line width=0.2cm] (4,\fpeval{3^(1/2)}) -- (5,\fpeval{5-(4-3^(1/2))});
 \draw[yellow, opacity=0.5, line width=0.2cm] (3,0) -- (5,0);
@@ -95,10 +101,27 @@ ylabel style={anchor=south},
 node[pos=-0.3]{minimum};
 \end{axis}
 \end{tikzpicture}
-\end{center}
+\begin{tikzpicture}
+\begin{axis}[domain=0:5, axis lines=middle, samples=100,
+ymax=3.5,
+ytick={\fpeval{4^(1/2)},\fpeval{5-(4-3^(1/2))}}, yticklabels={\(\alpha\),1},
+xtick={4}, xticklabels={\(\vatr{\alpha}{X}\)},
+ylabel={\(F_X(x)\)},xlabel={\(x\)},
+xlabel style={anchor=west},
+ylabel style={anchor=south},
+]
+\addplot[blue, domain=0:5]{x^(1/2)};
+\addplot[yellow, opacity=0.5, line width=0.2cm, domain=4:5]{x^(1/2)};
+\addplot[violet, dashed, domain=0:5]{4^(1/2)};
+\draw[yellow, opacity=0.5, line width=0.2cm] (4,0) -- (5,0);
+\draw[-Latex] (3.5,0.5) -- (4,0.1)
+node[pos=-0.3]{minimum};
+\end{axis}
+\end{tikzpicture}
+
 \begin{remark}
-\item In most cases, \(\alpha\)-VaR is the value that is not exceeded by the
-loss \(X\) with probability \(\alpha\), i.e.,
+\item In many (but not all!) cases, \(\alpha\)-VaR is the value that is not
+exceeded by the loss \(X\) with probability \(\alpha\), i.e.,
 \(\prob{X\le\vatr{\alpha}{X}}=\alpha\). (See
 \labelcref{it:alpha-cdf-no-intersect} for an example where this is not the
 case.)
@@ -106,8 +129,8 @@ case.)
 the loss can be ``absorbed'' by the insurer \faIcon{building} (so that
 \faIcon{building} would not bankrupt) with a high degree of certainty (when
 \(\alpha\) is large).
-\item If \(F_X\) is continuous and strictly increasing, we have
-\(\vatr{\alpha}{X}=F_X^{-1}(\alpha)\).
+\item If \(F_X\) is continuous and strictly increasing, then the inverse
+function \(F_X^{-1}\) exists and we have \(\vatr{\alpha}{X}=F_X^{-1}(\alpha)\).
 \end{remark}
 \item \label{it:alpha-cdf-no-intersect}
 If \(F_X\) is continuous, then we always have
@@ -130,10 +153,14 @@ ylabel style={anchor=south},
 \draw[blue] (3,\fpeval{3^(1/2)}) circle [radius=0.8mm];
 \draw[blue, fill] (3,3) circle [radius=0.8mm];
 \addplot[violet, dashed, domain=0:5]{2.2};
+\draw[yellow, opacity=0.5, line width=0.2cm] (3,3) -- (5,5);
+\draw[yellow, opacity=0.5, line width=0.2cm] (3,0) -- (5,0);
 \end{axis}
 \end{tikzpicture}
 \end{center}
-In this case, we have \(F_X(\vatr{\alpha}{X})>\alpha\).
+This is the third (and last) possible case: the line \(y=\alpha\) does not
+intersect with the cdf. In this case, we have
+\(F_X(\vatr{\alpha}{X})>\alpha\).
 \end{enumerate}
 \subsection{Conditional Tail Expectation}
 \begin{enumerate}
@@ -161,8 +188,14 @@ From \labelcref{it:alpha-cdf-no-intersect}, the probability
 \(\prob{X>\vatr{\alpha}{X}}\) is \(1-\alpha\) if \(F_X\) is continuous, and it
 is not necessarily \(1-\alpha\).
 \end{note}
+\item To compute conditional tail expectation, a typical approach is to utilize
+the relationship between CTE and \emph{tail value at risk} (to be introduced in
+\Cref{subsect:tvar}) as suggested in \labelcref{it:cte-tvar}. Alternatively,
+one may directly compute the expectation if the distribution involved is
+``nice''.
 \end{enumerate}
 \subsection{Tail Value-at-Risk}
+\label{subsect:tvar}
 \begin{enumerate}
 \item Let \(\alpha\in(0,1)\). The \defn{tail value-at-risk at confidence level
 \(\alpha\)} (or \defn{\(\alpha\)-TVaR}) of the loss \(X\) is the ``average'' of
@@ -170,6 +203,7 @@ the VaR at confidence level not less than \(\alpha\):
 \[
 \tvar{\alpha}{X}=\frac{1}{1-\alpha}\int_{\alpha}^{1}\vatr{p}{X}\dd{p}.
 \]
+Tail value-at-risk can be graphically illustrated as follows.
 \begin{center}
 \begin{tikzpicture}[
 declare function={
@@ -186,6 +220,7 @@ xlabel style={anchor=west},
 ylabel style={anchor=south},
 samples=100]
 \addplot[blue]{1-e^(-x)};
+\addplot[violet, dashed]{0.7};
 \addplot[draw=none, name path=A]{f(x)};
 \addplot[draw=none, name path=B] {1};
 \addplot[draw=none, name path=C]{g(x)};
@@ -206,8 +241,10 @@ node[pos=-0.4, magenta]{area \(\approx \vatr{p}{X}\dd{p}\)};
 We consider VaR at confidence level in the ``right tail''.
 \end{note}
 
-\item The following are several more cases represented geometrically:
-\begin{center}
+\item For the cases where the line \(y=\alpha\) does not intersect with the cdf
+or intersects with cdf at infinitely many points, the areas look like the
+following.
+
 \begin{tikzpicture}[
 declare function={
 f(\x)=(\x<3)*2.2 + (\x>=3)*(\x);
@@ -233,7 +270,6 @@ ylabel style={anchor=south},
 node[pos=-0.4, brown]{area = \(\displaystyle \int_{\alpha}^{1}\vatr{p}{X}\dd{p}\)};
 \end{axis}
 \end{tikzpicture}
-
 \begin{tikzpicture}[
 declare function={
 f(\x)=(\x<4)*1.732 + (\x>=4)*(\x-2.268);
@@ -242,7 +278,7 @@ f(\x)=(\x<4)*1.732 + (\x>=4)*(\x-2.268);
 \begin{axis}[domain=0:5, axis lines=middle, samples=100,
 ymax=3.5,
 ytick={\fpeval{3^(1/2)},\fpeval{5-(4-3^(1/2))}}, yticklabels={\(\alpha\),1},
-xtick={4}, xticklabels={\(\vatr{\alpha^+}{X}\)},
+xtick={3}, xticklabels={\(\vatr{\alpha}{X}\)},
 ylabel={\(F_X(x)\)},xlabel={\(x\)},
 xlabel style={anchor=west},
 ylabel style={anchor=south},
@@ -250,6 +286,7 @@ ylabel style={anchor=south},
 \addplot[blue, domain=0:3]{x^(1/2)};
 \addplot[blue, domain=3:4]{3^(1/2)};
 \addplot[blue, domain=4:5]{x-(4-3^(1/2))};
+\addplot[violet, dashed]{3^(1/2)};
 \addplot[draw=none, name path=A]{f(x)};
 \addplot[draw=none, name path=B] {5-2.268};
 \addplot[brown, opacity=0.3] fill between[of=A and B];
@@ -257,26 +294,58 @@ ylabel style={anchor=south},
 node[pos=-0.4, brown]{area = \(\displaystyle \int_{\alpha}^{1}\vatr{p}{X}\dd{p}\)};
 \end{axis}
 \end{tikzpicture}
-\end{center}
-\begin{note}
-\(\alpha^+\) represents a value that is ``just'' larger than \(\alpha\).
-\end{note}
+
+\item Like finding stop-loss premium, the key \faIcon{key} to compute the
+\(\alpha\)-TVaR is often to use the geometric approach, namely finding the
+area of the appropriate region, \emph{and then divide the area by
+\(1-\alpha\)} \begin{warning}
+Do not forget this step!
+\end{warning}.
 \end{enumerate}
+
+
 \subsection{Expected Shortfall}
 \begin{enumerate}
-\item Let \(\alpha\in(0,1)\). The \defn{expected shortfall at confidence level
-\(\alpha\)} (or \defn{\(\alpha\)-ESF}) of the loss \(X\) is the expected value
-of shortfall (with respect to \(\alpha\)-VaR):
+\item Before considering \emph{expected shortfall}, let us introduce the
+concept of \emph{shortfall} first. Here we assume that the capital reserve is
+calculated according to VaR at a certain confidence level \(\alpha\). Then the
+shortfall is given by
+\[
+\text{shortfall}=\begin{cases}
+X-\vatr{\alpha}{X}&\text{if \(X>\vatr{\alpha}{X}\)}, \\
+0&\text{if \(X\le \vatr{\alpha}{X}\)}
+\end{cases}
+=(X-\vatr{\alpha}{X})_{+}
+\]
+where \(X\) is the loss faced by the company. In words, the shortfall is the
+excess amount of loss over the \(\alpha\)-VaR (capital reserved based on VaR)
+if the loss exceeds the \(\alpha\)-VaR, and is zero otherwise (in this case the
+capital reserve is sufficient for covering the loss completely, so there is no
+``shortfall'').
+
+\item Then, as anticipated, the expected shortfall is just the expected value
+of shortfall introduced above.  Let \(\alpha\in(0,1)\). The \defn{expected
+shortfall at confidence level \(\alpha\)} (or \defn{\(\alpha\)-ESF}) of the
+loss \(X\) is the expected value of shortfall (with respect to \(\alpha\)-VaR):
 \[
 \esf{\alpha}{X}=\expv{(X-\vatr{\alpha}{X})_{+}}.
 \]
-\begin{note}
-The shortfall with respect to \(\alpha\)-VaR is the excess amount of loss over
-the \(\alpha\)-VaR (capital reserved based on VaR) when the loss exceeds the
-\(\alpha\)-VaR, and is zero otherwise.
-\end{note}
 
-\item By \cref{prp:mean-sl-surv}, we can express \(\esf{\alpha}{X}\) as:
+\begin{warning}
+The concepts of conditional tail expectation, tail value at risk, and expected
+shortfall can be defined very differently in other places. For example, the
+``expected shortfall'' in some other places may mean what we call ``tail value
+at risk'', etc.
+\end{warning}
+
+Although expected shortfall is a function assigning a number to each possible
+nonnegative loss random variable (hence is a risk measure mathematically), it
+is not an ``interpretable'' one in the sense that the number should not be
+regarded as the amount of capital needed to protect against the loss \(X\). It
+merely tells us how much our reserve (based on VaR) falls short when facing
+such loss, on average!
+
+\item By \Cref{prp:mean-sl-surv}, we can express \(\esf{\alpha}{X}\) as:
 \[
 \esf{\alpha}{X}=\int_{\vatr{\alpha}{X}}^{\infty}[1-F_X(x)]\dd{x}.
 \]
@@ -292,6 +361,7 @@ xlabel={\(t\)}, ylabel={\(F_X(t)\)},
 xlabel style={anchor=west},
 ylabel style={anchor=south}]
 \addplot[blue, name path=A]{1-e^(-x)};
+\addplot[violet, dashed]{0.7};
 \addplot[draw=none, name path=B]{1};
 \addplot[brown, opacity=0.3] fill between[of=A and B, soft clip={domain=1.204:3}];
 \draw[-Latex] (2,0.7) -- (1.5,0.9)
@@ -299,6 +369,60 @@ node[pos=-0.2, brown]{area = \(\esf{\alpha}{X}\)};
 \end{axis}
 \end{tikzpicture}
 \end{center}
+
+\item For completeness, we also consider the cases where the line \(y=\alpha\)
+does not intersect with the cdf or intersects with cdf at infinitely many
+points here:
+
+\begin{tikzpicture}[
+declare function={
+f(\x)=(\x<3)*2.2 + (\x>=3)*(\x);
+}
+]
+\begin{axis}[domain=0:5, axis lines=middle, samples=500,
+ymax=5.5,
+ytick={2.2,5}, yticklabels={\(\alpha\),1},
+xtick={3}, xticklabels={\(\vatr{\alpha}{X}\)},
+ylabel={\(F_X(x)\)},xlabel={\(x\)},
+xlabel style={anchor=west},
+ylabel style={anchor=south},
+]
+\addplot[blue, domain=0:3]{x^(1/2)};
+\addplot[blue, domain=3:5]{x};
+\addplot[draw=none, name path=A]{f(x)};
+\addplot[draw=none, name path=B] {5};
+\addplot[brown, opacity=0.3] fill between[of=A and B, soft clip={domain=3:5}];
+\draw[blue] (3,\fpeval{3^(1/2)}) circle [radius=0.8mm];
+\draw[blue, fill] (3,3) circle [radius=0.8mm];
+\addplot[violet, dashed, domain=0:5]{2.2};
+\draw[-Latex] (3,1.5) -- (3.6,4.2)
+node[pos=-0.2, brown]{area = \(\esf{\alpha}{X}\)};
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}[
+declare function={
+f(\x)=(\x<4)*1.732 + (\x>=4)*(\x-2.268);
+}
+]
+\begin{axis}[domain=0:5, axis lines=middle, samples=100,
+ymax=3.5,
+ytick={\fpeval{3^(1/2)},\fpeval{5-(4-3^(1/2))}}, yticklabels={\(\alpha\),1},
+xtick={3}, xticklabels={\(\vatr{\alpha}{X}\)},
+ylabel={\(F_X(x)\)},xlabel={\(x\)},
+xlabel style={anchor=west},
+ylabel style={anchor=south},
+]
+\addplot[blue, domain=0:3]{x^(1/2)};
+\addplot[blue, domain=3:4]{3^(1/2)};
+\addplot[blue, domain=4:5]{x-(4-3^(1/2))};
+\addplot[violet, dashed]{3^(1/2)};
+\addplot[draw=none, name path=A]{f(x)};
+\addplot[draw=none, name path=B] {5-2.268};
+\addplot[brown, opacity=0.3] fill between[of=A and B, soft clip={domain=3:5}];
+\draw[-Latex] (3,1.5) -- (3.6,2.25)
+node[pos=-0.4, brown]{area = \(\esf{\alpha}{X}\)};
+\end{axis}
+\end{tikzpicture}
 \end{enumerate}
 \subsection{Relationships Between VaR, CTE, TVaR and ESF}
 \begin{enumerate}
@@ -344,40 +468,10 @@ which implies that
 \end{pf}
 
 \item \label{it:cte-tvar}
-\(\displaystyle \cte{\alpha}{X}=\boxed{\tvar{F_X(\vatr{\alpha}{X})}{X}}\) (when \(0<F_X(\vatr{\alpha}{X})<1\))
+\(\displaystyle \cte{\alpha}{X}=\boxed{\tvar{F_X(\vatr{\alpha}{X})}{X}}\) (when \(0<F_X(\vatr{\alpha}{X})<1\)).
 
 \begin{pf}
-We have
-\begin{align*}
-\cte{\alpha}{X}=\expv{X|X>\vatr{\alpha}{X}}
-&=\vatr{\alpha}{X}+\underbrace{\expv{X-\vatr{\alpha}{X}|X>\vatr{\alpha}{X}}}_{e_X(\vatr{\alpha}{X})} \\
-&\overset{
-\text{\labelcref{it:mrl-exp-sl-relation}}}{=}\vatr{\alpha}{X}+\frac{\esf{\alpha}{X}}{1-F_X(\vatr{\alpha}{X})}\\
-&=\vatr{\color{violet}F_X(\vatr{\alpha}{X})}{X}+\frac{1}{1-{\color{violet}F_X(\vatr{\alpha}{X})}}
-\cdot \esf{\color{violet}F_X(\vatr{\alpha}{X})}{X}\\
-&\overset{\text{\labelcref{it:tvar-var-esf}}}{=}\tvar{\color{violet}F_X(\vatr{\alpha}{X})}{X}.
-\end{align*}
-For the second-to-last equality, see the proof of \labelcref{it:cte-var-esf}.
-\end{pf}
-
-\item \label{it:cte-var-esf}
-\(\displaystyle \cte{\alpha}{X}=\boxed{\vatr{\alpha}{X}+\frac{1}{1-F_X(\vatr{\alpha}{X})}\cdot \esf{\alpha}{X}}\) 
-(when \(F_X(\vatr{\alpha}{X})<1\))
-
-\begin{pf}
-Apply \labelcref{it:cte-tvar} and then \labelcref{it:tvar-var-esf}. Next, note
-that
-\[
-\vatr{F_X(\vatr{\alpha}{X})}{X}=\min\{{\color{violet}x}\ge 0:F_X({\color{violet}x})\ge F_X({\color{violet}\vatr{\alpha}{X}})\}
-={\color{violet}\vatr{\alpha}{X}},
-\]
-and
-\[
-\esf{F_X(\vatr{\alpha}{X})}{X}
-=\expv{\qty[X-{\color{brown}\vatr{F_X(\vatr{\alpha}{X})}{X}}]_{+}}
-=\expv{\qty[X-{\color{brown}\vatr{\alpha}{X}}]_{+}}
-=\esf{\alpha}{X}.
-\]
+Omitted.
 \end{pf}
 \end{enumerate}
 \begin{note}
@@ -386,6 +480,13 @@ continuous), then we can simplify the formula in \labelcref{it:cte-tvar} to:
 \[\cte{\alpha}{X}=\boxed{\tvar{\alpha}{X}}.\]
 This shows CTE and TVaR are equivalent in this case!
 \end{note}
+
+Since \labelcref{it:tvar-var-esf} should be obvious based on the geometric
+approaches for finding the risk measures, the more important relationship here
+is \labelcref{it:cte-tvar}, which provides a ``bridge'' for applying the
+geometric approach to compute the CTE indirectly. Knowing this, we can see that
+the key \faIcon{key} for computing risk measures is the geometric approach
+(finding area).
 \end{enumerate}
 \subsection{Coherent Risk Measures}
 \label{subsect:coherent-risk-measures}
@@ -400,11 +501,11 @@ The letters \(X\) and \(Y\) denote arbitrary nonnegative loss random variables
 \begin{itemize}
 \item \defn{translation invariance} (TI):
 \[
-\rho(X+c)=\rho(X)+c\quad\text{for any constant \(c\)}.
+\rho(X+c)=\rho(X)+c\quad\text{for any constant \(c\in\R\)}.
 \]
 \begin{note}
-This means adding a constant amount of loss (positive or negative) implies
-addition of the same amount to the required capital for protecting that loss.
+This means adding/subtracting an amount of loss implies addition/subtraction of
+the same amount to the required capital for protecting that loss.
 \end{note}
 \item \defn{positive homogeneity} (PH):
 \[
